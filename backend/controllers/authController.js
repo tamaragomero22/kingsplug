@@ -19,6 +19,15 @@ const handleErrors = (err) => {
             errors[properties.path] = properties.message;
         });
     }
+
+    // Login errors
+    if (err.message === 'incorrect email') {
+        errors.email = 'That email is not registered';
+    }
+    if (err.message === 'incorrect password') {
+        errors.password = 'That password is not correct';
+    }
+
     return errors;
 };
 
@@ -48,8 +57,14 @@ const registerPost = async (req, res) => {
 
 const loginPost = async (req, res) => {
     const { email, password } = req.body;
-    console.log(email, password);
-    res.send('user login');
+    
+    try {
+        const user = await User.login(email, password);
+        res.status(200).json({ message: "Login successful", userId: user._id });
+    } catch (err) {
+        const errors = handleErrors(err);
+        res.status(400).json({ errors });
+    }
 };
 
 export { registerGet, loginGet, registerPost, loginPost};
