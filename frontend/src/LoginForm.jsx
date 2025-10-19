@@ -31,7 +31,7 @@ const LoginForm = () => {
                     setEmailError(data.errors.email);
                     setPasswordError(data.errors.password);
                 }
-                throw new Error('Registration failed');
+                throw new Error('Login failed');
             }
 
             navigate('/dashboard');
