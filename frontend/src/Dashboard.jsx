@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Nav } from './Nav';
+import './Home.css'; // Import the same styles used by Home.jsx
 
 const Dashboard = () => {
     const [message, setMessage] = useState('');
+    const [priceData, setPriceData] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -24,6 +26,7 @@ const Dashboard = () => {
 
                 const data = await response.json();
                 setMessage(data.message);
+                setPriceData(data.priceData);
             } catch (error) {
                 console.error('Failed to fetch dashboard data:', error);
                 navigate('/login');
@@ -36,7 +39,14 @@ const Dashboard = () => {
     return (
         <>
             <Nav />
-            <h1>{message || 'Loading...'}</h1>
+            <div className="container">
+                <div className="home-content">
+                    <h2>{message || 'Loading...'}</h2>
+                    <h2>
+                        {priceData ? `Bitcoin Price: NGN ${priceData.bitcoin.ngn.toLocaleString()}` : 'Loading price...'}
+                    </h2>
+                </div>
+            </div>
         </>
     );
 };
