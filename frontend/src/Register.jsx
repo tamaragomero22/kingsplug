@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Register.css';
 import { Nav } from './Nav';
 
 const Register = () => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
@@ -20,7 +22,7 @@ const Register = () => {
                 method: 'POST',
                 body: JSON.stringify({ email, password }),
                 headers: { 'Content-Type': 'application/json' },
-                credentials: 'include' // This is essential for sending/receiving cookies cross-origin
+                credentials: 'include' // Essential for sending/receiving cookies cross-origin
             });
 
             const data = await res.json();
@@ -38,7 +40,8 @@ const Register = () => {
             console.log('Registration successful:', data);
             // You can redirect the user or show a success message here
             // For example: window.location.href = '/login';
-
+            // On successful registration, redirect to the services page.
+            navigate('/services');
         } catch (err) {
             console.error(err.message);
         }
