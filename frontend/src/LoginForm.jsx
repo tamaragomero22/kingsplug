@@ -24,13 +24,14 @@ const LoginForm = () => {
             });
 
             const data = await res.json();
+            console.log(data);
 
             if (!res.ok) {
                 if (data.errors) {
                     setEmailError(data.errors.email);
                     setPasswordError(data.errors.password);
                 }
-                throw new Error('Login failed');
+                throw new Error('Registration failed');
             }
 
             navigate('/dashboard');
@@ -38,6 +39,7 @@ const LoginForm = () => {
             console.error(err.message);
         }
     };
+
 
     return (
         <div className="signup-form-container">

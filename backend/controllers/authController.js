@@ -76,13 +76,7 @@ const loginPost = async (req, res) => {
     
     try {
         const user = await User.login(email, password);
-        const token = createToken(user._id);
-        res.cookie('jwt', token, {
-            httpOnly: true,
-            maxAge: maxAge * 1000,
-            // Use 'None' for cross-site requests, and 'Lax' for same-site.
-            sameSite: 'None',
-            secure: true // 'secure' must be true when sameSite is 'None'
+        res.status(200).json({ user: user._id 
         });
         res.status(200).json({ user: user._id });
     } catch (err) {

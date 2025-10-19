@@ -24,6 +24,8 @@ const SignupForm = () => {
             });
 
             const data = await res.json();
+            console.log(data);
+
 
             if (!res.ok) {
                 if (data.errors) {
