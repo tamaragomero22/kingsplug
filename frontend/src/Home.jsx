@@ -8,10 +8,10 @@ export const Home = () => {
     <>
       <Nav />
       
-      <div className="container">
+      <div className="container hero-section">
         <div className="home-content">
           <div className="hero-text">
-            <h1>Convert your <br />cryptocurrencies to <b>&#8358;</b>aira with ease.</h1>
+            <h1><span>Convert your <br /></span><span>cryptocurrencies to </span><span class="typewriter"><b>&#8358;</b>aira with ease.</span></h1>          
             <h3>
               Instantly get <b>&#8358;</b>aira equivalent of your crypto without stress. <b>Kingsplug Exchange</b> is a cryptocurrency platform that lets you convert you Bitcoin, ETH and USDT into Naira. 
             </h3>

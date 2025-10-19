@@ -15,12 +15,9 @@ body {
   color: #fff;
 }
 
-
 .home-content {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 2rem;
 }
 
 .hero-text {
@@ -31,12 +28,21 @@ body {
     font-size: 3rem;
     font-weight: 600;
     line-height: 1.2;
-    margin-bottom: 1rem;
-    background: linear-gradient(90deg, #5fff5f, #7beafe);
+    background: l#fff;
+}
+
+.typewriter {
+    position: relative; /* For cursor positioning */
+    overflow: hidden;
+    white-space: nowrap;
+    background: linear-gradient(90deg, #ff79c6, #9580ff, #80ffea);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-}
+    animation:
+      typing 2.5s steps(18, end),
+      blink 0.75s step-end infinite;
+  }
 
 
 .hero-text h3 {

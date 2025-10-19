@@ -5,7 +5,7 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
-form {
+.registerForm {
   max-width: 400px;
   margin: 30px auto;
   padding: 2rem;
@@ -14,47 +14,15 @@ form {
   box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
- h2 {
-  margin-top: 0;
-  margin-bottom: 1.5rem;
-  text-align: center;
-  color: #fff;
-}
-
-input {
-  width: 100%;
-  padding: 0.8rem;
-  margin-bottom: 5px;
-  border: 1px solid #444;
-  background-color: #c8c9c8;
-  color: #333;
-  border-radius: 5px;
-  box-sizing: border-box; /* Ensures padding doesn't affect overall width */
-}
-
-button {
-  width: 100%;
-  padding: 0.8rem;
-  background-color: #007aff;
-  color: #000;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  margin-top: 20px;
-  font-weight: bold;
-  transition: background-color 0.2s;
-  background: linear-gradient(90deg, #5fff5f, #7beafe);
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
 .error {
   color: #e74c3c;
   font-size: 0.8em;
   height: 1.2em; /* Reserves space to prevent layout shift when errors appear */
   margin-top: 2px;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: #444;
 }

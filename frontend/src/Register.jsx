@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './Register.css';
 import { Nav } from './Nav';
 
@@ -50,7 +50,7 @@ const Register = () => {
     return (
         <>
             <Nav />
-            <form onSubmit={handleSubmit}>
+            <form className="registerForm" onSubmit={handleSubmit}>
                 <h2>Sign up</h2>
                 <input
                     type="text"
@@ -73,6 +73,8 @@ const Register = () => {
                 <div className="error">{passwordError}</div>
     
                 <button type="submit">Sign up</button>
+
+                <Link className="forgotPassword">Have an Account? Log in Here</Link>
             </form>
         </>
     );

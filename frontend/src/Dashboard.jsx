@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Nav } from './Nav';
 import './Home.css'; // Import the same styles used by Home.jsx
 
@@ -29,12 +29,27 @@ const Dashboard = () => {
                 setPriceData(data.priceData);
             } catch (error) {
                 console.error('Failed to fetch dashboard data:', error);
-                navigate('/login');
+                navigate('/');
             }
         };
 
         fetchDashboardData();
     }, [navigate]);
+
+    const handleLogout = async () => {
+        try {
+            await fetch('http://localhost:4000/api/auth/logout', {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include'
+            });
+            // On successful logout, redirect to the homepage
+            navigate('/');
+        } catch (error) {
+            console.error('Logout failed:', error);
+            // Optionally handle logout errors, e.g., show a notification
+        }
+    };
 
     return (
         <>
@@ -45,6 +60,8 @@ const Dashboard = () => {
                     <h2>
                         {priceData ? `Bitcoin Price: ₦${priceData.bitcoin.ngn.toLocaleString()}` : 'Loading price...'}
                     </h2>
+                    {/* Use a button for actions like logging out */}
+                    <button onClick={handleLogout} className="btnLogin">Logout</button>
                 </div>
             </div>
         </>

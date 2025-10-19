@@ -90,4 +90,11 @@ const loginPost = async (req, res) => {
     }
 };
 
-export { registerGet, loginGet, registerPost, loginPost};
+const logoutGet = (req, res) => {
+    res.cookie('jwt', '', { httpOnly: true, maxAge: 1, sameSite: 'None', secure: true });
+    // It's good practice to send a confirmation or redirect.
+    res.status(200).json({ message: 'User logged out' });
+    
+};
+
+export { registerGet, loginGet, registerPost, loginPost, logoutGet };

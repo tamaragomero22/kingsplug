@@ -1,0 +1,38 @@
+h2 {
+  margin-top: 0;
+  color: #d1cccc;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+input {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 5px;
+  border: 1px solid #444;
+  background-color: #c8c9c8;
+  color: #333;
+  box-sizing: border-box;
+}
+
+input:focus {
+  border: 1px solid 	hsl(189, 98%, 50%); /* Custom border color */
+  outline: none; /* Remove the default browser outline */
+}
+
+input::placeholder {
+  font-size: 1rem;
+}
+
+button {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 5px;
+  color: #000;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  background: #9580ff;
+  transition: background-color 0.2s;
+}

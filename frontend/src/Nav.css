@@ -30,7 +30,7 @@ nav ul li {
 
 nav a {
     text-decoration: none;
-    color: hsl(37, 96%, 61%);;
+    color: #80ffea;
     font-size: 1.1rem;
     padding: 0.5rem 1rem;
     border: 1px solid transparent; /* Add transparent border */
@@ -51,17 +51,4 @@ nav a:hover {
 nav a.active {
     background-color: #111822;
     border-color: #4A5568;
-}
-
-nav ul li:last-child a {
-    border: 1px solid hsl(37, 96%, 40%);
-    border-radius: 25px;
-    background-color: 	hsl(37, 96%, 61%);
-    color: 	hsl(0, 0%, 10%);
-    text-align: center;
-    font-weight: 500;
-}
-
-nav ul li:last-child a:hover {
-    border: 1px solid 	hsl(37, 96%, 51%);
 }
