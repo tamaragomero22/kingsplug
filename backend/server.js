@@ -4,6 +4,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import authRoutes from './routes/authRoutes.js';
+import dashboardRoutes from './routes/dashboardRoutes.js';
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -18,7 +19,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
-app.use('/api/auth', authRoutes); // API Routes
+
+// API Routes
+app.use('/api/auth', authRoutes);
+app.use('/api', dashboardRoutes); // Use the protected dashboard routes
 
 const startServer = async () => {
     try {
