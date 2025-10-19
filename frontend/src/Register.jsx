@@ -41,7 +41,7 @@ const Register = () => {
             // You can redirect the user or show a success message here
             // For example: window.location.href = '/login';
             // On successful registration, redirect to the services page.
-            navigate('/services');
+            navigate('/dashboard');
         } catch (err) {
             console.error(err.message);
         }

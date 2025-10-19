@@ -7,7 +7,7 @@ export const Nav = () => {
         <header>
             <div id="headerContainer">
                 <div>
-                    <Link to="/" className="logo">Nyson</Link>
+                    <Link to="/" className="logo">Kingsplug</Link>
                 </div>
 
                 <nav>
