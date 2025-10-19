@@ -29,7 +29,7 @@ const Register = () => {
                     setEmailError(data.errors.email);
                     setPasswordError(data.errors.password);
                 }
-                throw new Error('Registration failed');
+                throw new Error('Registration failed'); // This should be inside the if block
             }
 
             // If registration is successful
@@ -45,25 +45,25 @@ const Register = () => {
     return (
         <form onSubmit={handleSubmit}>
             <h2>Sign up</h2>
-            <label htmlFor="email">Email</label>
             <input
                 type="email"
                 name="email"
+                placeholder="Email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
             <div className="email error">{emailError}</div>
 
-            <label htmlFor="password">Password</label>
             <input
                 type="password"
                 name="password"
+                placeholder="Password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <div className="password error">{passwordError}</div>
+            <div className="error">{passwordError}</div>
 
             <button type="submit">Sign up</button>
         </form>
