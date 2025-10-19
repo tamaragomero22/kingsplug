@@ -43,7 +43,7 @@ const Dashboard = () => {
                 <div className="home-content">
                     <h2>{message || 'Loading...'}</h2>
                     <h2>
-                        {priceData ? `Bitcoin Price: NGN ${priceData.bitcoin.ngn.toLocaleString()}` : 'Loading price...'}
+                        {priceData ? `Bitcoin Price: ₦${priceData.bitcoin.ngn.toLocaleString()}` : 'Loading price...'}
                     </h2>
                 </div>
             </div>

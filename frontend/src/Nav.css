@@ -13,13 +13,6 @@ header {
     align-items: center;
 }
 
-.logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-decoration: none;
-    color: #fff;
-}
-
 nav ul {
     list-style: none;
     display: flex;
@@ -35,14 +28,9 @@ nav ul li {
     cursor: pointer;
 }
 
-.nav-link-with-icon {
-    display: flex;
-    align-items: center;
-}
-
 nav a {
     text-decoration: none;
-    color: #fff;
+    color: hsl(37, 96%, 61%);;
     font-size: 1.1rem;
     padding: 0.5rem 1rem;
     border: 1px solid transparent; /* Add transparent border */
@@ -66,15 +54,14 @@ nav a.active {
 }
 
 nav ul li:last-child a {
-    border: 1px solid #4A5568;
+    border: 1px solid hsl(37, 96%, 40%);
     border-radius: 25px;
-    background-color: transparent; /* Override the default hover background */
+    background-color: 	hsl(37, 96%, 61%);
+    color: 	hsl(0, 0%, 10%);
+    text-align: center;
+    font-weight: 500;
 }
 
 nav ul li:last-child a:hover {
-    border: 1px solid #313946;
-}
-
-h1 {
-    color: #fff;
+    border: 1px solid 	hsl(37, 96%, 51%);
 }
