@@ -14,10 +14,6 @@ app.use(express.json());
 app.use(cookieParser());
 app.use('/api/auth', authRoutes); // API Routes
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-})
-
 const startServer = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI);
