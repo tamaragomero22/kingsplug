@@ -19,7 +19,8 @@ const Register = () => {
             const res = await fetch('http://localhost:4000/api/auth/register', {
                 method: 'POST',
                 body: JSON.stringify({ email, password }),
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include' // This is essential for sending/receiving cookies cross-origin
             });
 
             const data = await res.json();

@@ -9,7 +9,13 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 // Middlewares
-app.use(cors({credentials: true}));
+const corsOptions = {
+    // Replace with your frontend's actual origin.
+    // This is crucial for security and for cookies to work.
+    origin: 'http://localhost:5173', // Example for Vite, use 3000 for Create React App
+    credentials: true,
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/api/auth', authRoutes); // API Routes

@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import jwt from 'jsonwebtoken';
 
 // Handle errors
 const handleErrors = (err) => {
@@ -31,7 +32,13 @@ const handleErrors = (err) => {
     return errors;
 };
 
-
+// JWT
+const maxAge = 3 * 24 * 60 * 60 // JWT duration: 3 days in seconds
+const createToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, {
+        expiresIn: maxAge
+    });
+}
 
 const registerGet = (req, res) => {
     res.send('sign up');
@@ -42,12 +49,21 @@ const loginGet = (req, res) => {
     res.send('login');
 };
 
+
 const registerPost = async (req, res) => {
     const { email, password } = req.body;
 
     try {
         const user = await User.create({ email, password });
-        res.status(201).json({ message: "User created successfully", userId: user._id });
+        const token = createToken(user._id);
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            maxAge: maxAge * 1000,
+            // Use 'None' for cross-site requests, and 'Lax' for same-site.
+            sameSite: 'None',
+            secure: true // 'secure' must be true when sameSite is 'None'
+        });
+        res.status(201).json({ user: user._id });
     }
     catch (err) {
         const errors = handleErrors(err);
@@ -60,7 +76,15 @@ const loginPost = async (req, res) => {
     
     try {
         const user = await User.login(email, password);
-        res.status(200).json({ message: "Login successful", userId: user._id });
+        const token = createToken(user._id);
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            maxAge: maxAge * 1000,
+            // Use 'None' for cross-site requests, and 'Lax' for same-site.
+            sameSite: 'None',
+            secure: true // 'secure' must be true when sameSite is 'None'
+        });
+        res.status(200).json({ user: user._id });
     } catch (err) {
         const errors = handleErrors(err);
         res.status(400).json({ errors });
