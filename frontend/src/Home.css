@@ -92,9 +92,3 @@ body {
 .btn-signup:hover {
     background-color: #005ecb;
 }
-
-.api-message {
-  margin-top: 2rem;
-  font-style: italic;
-  color: #888;
-}

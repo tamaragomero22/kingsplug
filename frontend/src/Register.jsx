@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './Register.css';
+import { Nav } from './Nav';
 
 const Register = () => {
     const [email, setEmail] = useState('');
@@ -43,30 +44,33 @@ const Register = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>Sign up</h2>
-            <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
-            <div className="email error">{emailError}</div>
-
-            <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <div className="error">{passwordError}</div>
-
-            <button type="submit">Sign up</button>
-        </form>
+        <>
+            <Nav />
+            <form onSubmit={handleSubmit}>
+                <h2>Sign up</h2>
+                <input
+                    type="text"
+                    name="email"
+                    placeholder="Email"
+                    
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <div className="email error">{emailError}</div>
+    
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <div className="error">{passwordError}</div>
+    
+                <button type="submit">Sign up</button>
+            </form>
+        </>
     );
 };
 
