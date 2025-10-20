@@ -55,7 +55,7 @@ const Dashboard = () => {
         <>
             <Nav />
             <div className="container">
-                <div className="home-content">
+                <div className="home-content" style={{ display: 'block', textAlign: 'center' }}>
                     <h2>{message || 'Loading...'}</h2>
                     <h2>
                         {priceData ? `Bitcoin Price: ₦${priceData.bitcoin.ngn.toLocaleString()}` : 'Loading price...'}

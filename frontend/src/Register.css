@@ -15,8 +15,8 @@ body {
 }
 
 .error {
-  color: #e74c3c;
-  font-size: 0.8em;
+  color: #c07f08;
+  font-size: 0.9em;
   height: 1.2em; /* Reserves space to prevent layout shift when errors appear */
   margin-top: 2px;
 }
