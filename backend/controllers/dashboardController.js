@@ -31,8 +31,8 @@ const getDashboardData = async (req, res) => {
 
     // Send personalized message and whatever data we managed to get.
     res.status(200).json({
-        message: `Welcome, ${user.email}`, // Personalized message
-        priceData // This will be null if the fetch failed
+        priceData, // This will be null if the fetch failed
+        user: { email: user.email } // Send user object separately
     });
 };
 

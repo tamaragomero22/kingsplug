@@ -3,12 +3,12 @@ import './Nav.css';
 import homeIcon from './assets/home.svg';
 import logo from './assets/kingsplug.png';
 
-export const Nav = ({ userEmail }) => {
+export const Nav = ({ userEmail, onLogout, logoLinkTo = "/" }) => {
     return (
         <header>
             <div id="headerContainer">
                 <div>
-                    <Link to="/"><img src={logo} alt="Kignsplug logo" /></Link>
+                    <Link to={logoLinkTo}><img src={logo} alt="Kignsplug logo" /></Link>
                 </div>
 
                 <nav>
@@ -17,6 +17,7 @@ export const Nav = ({ userEmail }) => {
                             <>
                                 <li><NavLink to="/dashboard">Dashboard</NavLink></li>
                                 <li className="user-email">{userEmail}</li>
+                                <li><button onClick={onLogout} className="nav-logout-btn">Logout</button></li>
                             </>
                         ) : (
                             <>

@@ -4,10 +4,10 @@ import { Nav } from './Nav';
 import './Dashboard.css'; // Import the new dashboard styles
 
 const Dashboard = () => {
-    const [message, setMessage] = useState('');
     const [priceData, setPriceData] = useState(null);
     const navigate = useNavigate();
     const [userEmail, setUserEmail] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchDashboardData = async () => {
@@ -21,27 +21,24 @@ const Dashboard = () => {
 
                 if (!response.ok) {
                     // If auth middleware returns 401, or for other errors
-                    // Only navigate away on the initial load.
-                    if (!message) {
+                    // Only navigate away on the initial load failure.
+                    if (isLoading) {
                         navigate('/');
                     }
                     return;
                 }
 
                 const data = await response.json();
-                setMessage(data.message);
                 setPriceData(data.priceData);
-                // Extract email from the welcome message for the nav
-                if (data.message && data.message.startsWith('Welcome,')) {
-                    const email = data.message.split(',')[1].trim();
-                    setUserEmail(email);
-                }
+                setUserEmail(data.user.email);
             } catch (error) {
                 console.error('Failed to fetch dashboard data:', error.message);
                 // Only navigate away on initial load failure.
-                if (!message) {
+                if (isLoading) {
                     navigate('/');
                 }
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -50,7 +47,7 @@ const Dashboard = () => {
 
         // Cleanup interval on component unmount
         return () => clearInterval(intervalId);
-    }, [navigate, message]);
+    }, [navigate, isLoading]);
 
     const handleLogout = async () => {
         try {
@@ -69,16 +66,15 @@ const Dashboard = () => {
 
     return (
         <>
-            <Nav userEmail={userEmail} />
+            <Nav userEmail={userEmail} onLogout={handleLogout} logoLinkTo="/dashboard" />
             <div className="dashboard-container">
                 <div className="dashboard-header">
-                    <h2>{message || 'Loading...'}</h2>
+                    <h2>{isLoading ? 'Loading...' : 'Dashboard'}</h2>
                 </div>
                 <div className="dashboard-content">
                     <div className="price-display">
-                        {priceData ? `Bitcoin Price: ₦${priceData.bitcoin.ngn.toLocaleString()}` : 'Loading price...'}
+                        <p>{priceData ? `Bitcoin Price: ₦${priceData.bitcoin.ngn.toLocaleString()}` : 'Loading price...'} </p>
                     </div>
-                    <button onClick={handleLogout} className="logout-btn">Logout</button>
                 </div>
             </div>
         </>

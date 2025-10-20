@@ -59,3 +59,20 @@ nav a.active {
     padding: 0.5rem 1rem;
     cursor: default; /* Not a link */
 }
+
+.nav-logout-btn {
+    background-color: transparent;
+    color: #80ffea;
+    font-family: inherit; /* Use the site's font */
+    font-size: 1.1rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.nav-logout-btn:hover {
+    background-color: hsl(215, 33%, 10%);
+    border-color: #4A5568;
+}
