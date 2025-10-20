@@ -10,12 +10,13 @@ header {
 }
 
 #headerContainer {
-  padding: 1rem 0;
+  padding: 0.4rem 0;
   max-width: 1000px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 40px;
 }
 
 nav ul {
@@ -34,10 +35,13 @@ nav ul li {
 }
 
 nav a {
+  display: flex;
+  align-items: center;
   text-decoration: none;
   color: #80ffea;
-  font-size: 1.1rem;
-  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  text-align: center;
+  padding: 0.3rem 1rem;
   border: 1px solid transparent; /* Add transparent border */
   border-radius: 6px;
   transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out; /* Add border-color to transition */
@@ -45,7 +49,9 @@ nav a {
 
 nav a img {
   margin-right: 8px; /* Adjust as needed for spacing between icon and text */
-  height: 20px; /* Or your desired icon height */
+  height: 17px; /* Or your desired icon height */
+  text-align: center;
+  align-items: center;
 }
 
 nav a:hover {

@@ -10,7 +10,11 @@ export const Nav = ({ userEmail, onLogout, logoLinkTo = "/" }) => {
       <div id="headerContainer">
         <div>
           <Link to={logoLinkTo}>
-            <img src={logo} alt="Kignsplug logo" />
+            <img
+              src={logo}
+              alt="Kignsplug logo"
+              style={{ marginTop: "20px" }}
+            />
           </Link>
         </div>
 

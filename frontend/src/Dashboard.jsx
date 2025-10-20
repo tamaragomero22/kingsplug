@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Nav } from "./Nav";
 import "./Dashboard.css"; // Import the new dashboard styles
+import { Footer } from "./Footer";
 
 const Dashboard = () => {
   const [priceData, setPriceData] = useState(null);
@@ -84,6 +85,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };
