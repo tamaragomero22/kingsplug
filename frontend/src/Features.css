@@ -27,7 +27,7 @@ section {
   background: #fff;
   border-radius: 1rem;
   padding: 2rem;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   opacity: 0;
   transform: translateY(30px);
@@ -40,7 +40,7 @@ section {
 
 .feature-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
 .feature-icon {
@@ -68,7 +68,7 @@ section {
   border-radius: 1rem;
   padding: 2rem;
   max-width: 300px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease;
 }
 
@@ -92,13 +92,4 @@ section {
 .user-name {
   font-weight: 600;
   color: #111;
-}
-
-/* === RESPONSIVE DESIGN === */
-@media (max-width: 768px) {
-  .features-container, .testimonial-container {
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-  }
 }
