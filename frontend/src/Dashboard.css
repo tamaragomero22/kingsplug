@@ -1,0 +1,42 @@
+.dashboard-container {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 2rem;
+  color: #fff;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.dashboard-header h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #e0e0e0;
+}
+
+.dashboard-content {
+  background-color: #1a1a2e;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.price-display {
+  margin: 1.5rem 0;
+  font-size: 1.5rem;
+  color: #80ffea; /* A highlight color from your theme */
+}
+
+.price-display span {
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+
+.logout-btn {
+  width: auto; /* Allow button to size to content */
+  padding: 0.8rem 2rem; /* More horizontal padding */
+  margin-top: 1.5rem;
+}

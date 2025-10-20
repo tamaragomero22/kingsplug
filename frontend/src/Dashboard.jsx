@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Nav } from './Nav';
-import './Home.css'; // Import the same styles used by Home.jsx
+import './Dashboard.css'; // Import the new dashboard styles
 
 const Dashboard = () => {
     const [message, setMessage] = useState('');
     const [priceData, setPriceData] = useState(null);
     const navigate = useNavigate();
+    const [userEmail, setUserEmail] = useState('');
 
     useEffect(() => {
         const fetchDashboardData = async () => {
@@ -20,21 +21,36 @@ const Dashboard = () => {
 
                 if (!response.ok) {
                     // If auth middleware returns 401, or for other errors
-                    navigate('/');
+                    // Only navigate away on the initial load.
+                    if (!message) {
+                        navigate('/');
+                    }
                     return;
                 }
 
                 const data = await response.json();
                 setMessage(data.message);
                 setPriceData(data.priceData);
+                // Extract email from the welcome message for the nav
+                if (data.message && data.message.startsWith('Welcome,')) {
+                    const email = data.message.split(',')[1].trim();
+                    setUserEmail(email);
+                }
             } catch (error) {
-                console.error('Failed to fetch dashboard data:', error);
-                navigate('/');
+                console.error('Failed to fetch dashboard data:', error.message);
+                // Only navigate away on initial load failure.
+                if (!message) {
+                    navigate('/');
+                }
             }
         };
 
         fetchDashboardData();
-    }, [navigate]);
+        const intervalId = setInterval(fetchDashboardData, 10000); // Fetch every 10 seconds
+
+        // Cleanup interval on component unmount
+        return () => clearInterval(intervalId);
+    }, [navigate, message]);
 
     const handleLogout = async () => {
         try {
@@ -53,15 +69,16 @@ const Dashboard = () => {
 
     return (
         <>
-            <Nav />
-            <div className="container">
-                <div className="home-content" style={{ display: 'block', textAlign: 'center' }}>
+            <Nav userEmail={userEmail} />
+            <div className="dashboard-container">
+                <div className="dashboard-header">
                     <h2>{message || 'Loading...'}</h2>
-                    <h2>
+                </div>
+                <div className="dashboard-content">
+                    <div className="price-display">
                         {priceData ? `Bitcoin Price: ₦${priceData.bitcoin.ngn.toLocaleString()}` : 'Loading price...'}
-                    </h2>
-                    {/* Use a button for actions like logging out */}
-                    <button onClick={handleLogout} className="btnLogin">Logout</button>
+                    </div>
+                    <button onClick={handleLogout} className="logout-btn">Logout</button>
                 </div>
             </div>
         </>

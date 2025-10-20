@@ -1,3 +1,5 @@
+import { HttpsProxyAgent } from 'https-proxy-agent';
+
 const getDashboardData = async (req, res) => {
     // The `checkUser` middleware has already run and populated `res.locals.user`
     const user = res.locals.user;
@@ -8,9 +10,16 @@ const getDashboardData = async (req, res) => {
     }
 
     let priceData = null;
+    // Use an HttpsProxyAgent if a proxy is configured in the environment variables
+    const agent = process.env.HTTP_PROXY ? new HttpsProxyAgent(process.env.HTTP_PROXY) : undefined;
+
     try {
         // Fetch external data (like crypto prices)
-        const priceResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=ngn');
+        const priceResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=ngn', {
+            // The agent will be used for the fetch request if it's defined
+            // @ts-ignore - The `agent` property is valid but might not be in all TS type definitions for fetch
+            agent: agent,
+        });
         if (priceResponse.ok) {
             priceData = await priceResponse.json();
         }

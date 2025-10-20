@@ -3,7 +3,7 @@ import './Nav.css';
 import homeIcon from './assets/home.svg';
 import logo from './assets/kingsplug.png';
 
-export const Nav = () => {
+export const Nav = ({ userEmail }) => {
     return (
         <header>
             <div id="headerContainer">
@@ -13,10 +13,18 @@ export const Nav = () => {
 
                 <nav>
                     <ul>
-                        <li><NavLink to="/"><img src={homeIcon} alt="Home" />Home</NavLink></li>
-                        <li><NavLink to="/about">About</NavLink></li>
-                        <li><NavLink to="/login">Services</NavLink></li>
-                        <li><NavLink to="/register">Sign up</NavLink></li>
+                        {userEmail ? (
+                            <>
+                                <li><NavLink to="/dashboard">Dashboard</NavLink></li>
+                                <li className="user-email">{userEmail}</li>
+                            </>
+                        ) : (
+                            <>
+                                <li><NavLink to="/"><img src={homeIcon} alt="Home" />Home</NavLink></li>
+                                <li><NavLink to="/about">About</NavLink></li>
+                                <li><NavLink to="/register">Sign up</NavLink></li>
+                            </>
+                        )}
                     </ul>
                 </nav>
             </div>

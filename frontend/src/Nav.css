@@ -52,3 +52,10 @@ nav a.active {
     background-color: #111822;
     border-color: #4A5568;
 }
+
+.user-email {
+    color: #d1cccc;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    cursor: default; /* Not a link */
+}
