@@ -91,10 +91,36 @@ const loginPost = async (req, res) => {
 };
 
 const logoutGet = (req, res) => {
+    // To log a user out, we replace the JWT cookie with a blank one that expires immediately.
+    // The cookie options should match the ones used when setting it.
     res.cookie('jwt', '', { httpOnly: true, maxAge: 1, sameSite: 'None', secure: true });
     // It's good practice to send a confirmation or redirect.
     res.status(200).json({ message: 'User logged out' });
-    
 };
 
-export { registerGet, loginGet, registerPost, loginPost, logoutGet };
+const checkUser = (req, res, next) => {
+    // This middleware now runs on all requests, so we only
+    // check for a JWT on GET requests.
+    if (req.method !== 'GET') {
+        return next();
+    }
+
+    const token = req.cookies.jwt;
+    if (token) {
+        jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
+            if (err) {
+                res.locals.user = null;
+                next();
+            } else {
+                let user = await User.findById(decodedToken.id);
+                res.locals.user = user; // Make user info available in subsequent middleware/handlers
+                next();
+            }
+        });
+    } else {
+        res.locals.user = null;
+        next();
+    }
+};
+
+export { registerGet, loginGet, registerPost, loginPost, logoutGet, checkUser };

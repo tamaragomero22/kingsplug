@@ -4,6 +4,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import authRoutes from './routes/authRoutes.js';
+import { checkUser } from './controllers/authController.js';
 import dashboardRoutes from './routes/dashboardRoutes.js';
 
 const app = express();
@@ -21,6 +22,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 // API Routes
+// Apply checkUser middleware to all incoming requests.
+// The checkUser function itself will handle logic for GET requests.
+app.use(checkUser);
 app.use('/api/auth', authRoutes);
 app.use('/api', dashboardRoutes); // Use the protected dashboard routes
 
