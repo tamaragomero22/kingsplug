@@ -1,78 +1,83 @@
 header {
-    background-color: hsl(215, 33%, 7%);
-    border-bottom: 1px solid hsl(215, 33%, 18%);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: hsl(215, 33%, 7%);
+  border-bottom: 1px solid hsl(215, 33%, 18%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Ensure nav is on top of other content */
 }
 
 #headerContainer {
-    padding: 1rem 0;
-    max-width: 1000px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  padding: 1rem 0;
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 nav ul {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-    gap: 1.5rem;
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  gap: 1.5rem;
 }
 
 nav ul li {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 nav a {
-    text-decoration: none;
-    color: #80ffea;
-    font-size: 1.1rem;
-    padding: 0.5rem 1rem;
-    border: 1px solid transparent; /* Add transparent border */
-    border-radius: 6px;
-    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out; /* Add border-color to transition */
+  text-decoration: none;
+  color: #80ffea;
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent; /* Add transparent border */
+  border-radius: 6px;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out; /* Add border-color to transition */
 }
 
 nav a img {
-    margin-right: 8px; /* Adjust as needed for spacing between icon and text */
-    height: 20px; /* Or your desired icon height */
+  margin-right: 8px; /* Adjust as needed for spacing between icon and text */
+  height: 20px; /* Or your desired icon height */
 }
 
 nav a:hover {
-    background-color: hsl(215, 33%, 10%);;
-    border-color: #4A5568; /* Change border color on hover */
+  background-color: hsl(215, 33%, 10%);
+  border-color: #4a5568; /* Change border color on hover */
 }
 
 nav a.active {
-    background-color: #111822;
-    border-color: #4A5568;
+  background-color: #111822;
+  border-color: #4a5568;
 }
 
 .user-email {
-    color: #d1cccc;
-    font-size: 0.9rem;
-    padding: 0.5rem 1rem;
-    cursor: default; /* Not a link */
+  color: #d1cccc;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  cursor: default; /* Not a link */
 }
 
 .nav-logout-btn {
-    background-color: transparent;
-    color: #80ffea;
-    font-family: inherit; /* Use the site's font */
-    font-size: 1.1rem;
-    padding: 0.5rem 1rem;
-    border: 1px solid transparent;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  background-color: transparent;
+  color: #80ffea;
+  font-family: inherit; /* Use the site's font */
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
 
 .nav-logout-btn:hover {
-    background-color: hsl(215, 33%, 10%);
-    border-color: #4A5568;
+  background-color: hsl(215, 33%, 10%);
+  border-color: #4a5568;
 }

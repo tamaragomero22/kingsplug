@@ -1,11 +1,12 @@
 .dashboard-container {
   max-width: 800px;
   margin: 3rem auto;
+  margin-top: 8rem;
   padding: 2rem;
   background-color: #ffffff;
   color: #333; /* Dark text for light background */
   border-radius: 10px;
-  box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard-header {

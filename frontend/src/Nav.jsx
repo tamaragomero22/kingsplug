@@ -19,7 +19,7 @@ export const Nav = ({ userEmail, onLogout, logoLinkTo = "/" }) => {
             {userEmail ? (
               <>
                 <li>
-                  <NavLink to="/dashboard">Dashboard</NavLink>
+                  <NavLink to="/dashboard">Wallet</NavLink>
                 </li>
                 <li className="user-email">{userEmail}</li>
                 <li>
