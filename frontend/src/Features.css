@@ -1,18 +1,16 @@
 section {
   padding: 4rem 1.5rem;
   text-align: center;
-  background-color: #fff;
 }
 
-.section-title {
+.features-title {
   font-size: 2rem;
   margin-bottom: 2rem;
-  color: #111;
+  color: #d1cccc;
 }
 
-/* === FEATURES SECTION === */
 .features-section {
-  background-color: #f9fafc;
+  margin-top: 30px;
 }
 
 .features-container {
@@ -46,12 +44,13 @@ section {
 .feature-icon {
   width: 50px;
   height: 50px;
+  color: red;
   margin-bottom: 1rem;
 }
 
 /* === TESTIMONIALS SECTION === */
 .testimonials-section {
-  background-color: #fff;
+  background-color: #f8f8fa;
 }
 
 .testimonial-container {
@@ -63,8 +62,15 @@ section {
   margin: 0 auto;
 }
 
+.testimonials-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #242455;
+}
+
 .testimonial-card {
   background: #f9fafc;
+  border: 1px solid #e1e2e4;
   border-radius: 1rem;
   padding: 2rem;
   max-width: 300px;
@@ -77,10 +83,11 @@ section {
 }
 
 .user-photo {
-  width: 60px;
-  height: 60px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   margin-bottom: 1rem;
+  background-color: #aca6a6;
 }
 
 .testimonial-text {

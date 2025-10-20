@@ -32,6 +32,7 @@ export const Home = () => {
         </div>
       </div>
       <Features />
+
       <Footer />
     </>
   );

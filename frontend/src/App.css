@@ -16,7 +16,7 @@ input {
 }
 
 input:focus {
-  border: 1px solid 	hsl(189, 98%, 50%); /* Custom border color */
+  border: 1px solid hsl(189, 98%, 50%); /* Custom border color */
   outline: none; /* Remove the default browser outline */
 }
 

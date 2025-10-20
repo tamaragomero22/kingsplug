@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import "./Features.css";
-import instantIcon from "./assets/icons/instant.svg";
-import secureIcon from "./assets/icons/secure.svg";
-import supportIcon from "./assets/icons/support.svg";
-import ratesIcon from "./assets/icons/rates.svg";
+import instantIcon from "./assets/icons/instant.png";
+import secureIcon from "./assets/icons/secure.png";
+import supportIcon from "./assets/icons/support.png";
+import ratesIcon from "./assets/icons/rates.png";
 import user1 from "./assets/images/user1.png";
 import user2 from "./assets/images/user2.png";
 import user3 from "./assets/images/user3.png";
@@ -30,7 +30,7 @@ export const Features = () => {
   return (
     <>
       <section id="features" className="features-section">
-        <h2 className="section-title">Why Choose Kingsplug Exchange?</h2>
+        <h2 className="features-title">Why Choose Kingsplug Exchange?</h2>
         <div className="features-container">
           <div className="feature-card fade-up">
             <img
@@ -44,6 +44,16 @@ export const Features = () => {
               delays.
             </p>
           </div>
+
+          <div className="feature-card fade-up">
+            <img src={ratesIcon} alt="Rates Icon" className="feature-icon" />
+            <h3>Best Exchange Rates</h3>
+            <p>
+              Enjoy competitive and transparent conversion rates with zero
+              hidden fees.
+            </p>
+          </div>
+
           <div className="feature-card fade-up">
             <img
               src={secureIcon}
@@ -56,6 +66,7 @@ export const Features = () => {
               security layers.
             </p>
           </div>
+
           <div className="feature-card fade-up">
             <img
               src={supportIcon}
@@ -68,19 +79,11 @@ export const Features = () => {
               or night.
             </p>
           </div>
-          <div className="feature-card fade-up">
-            <img src={ratesIcon} alt="Rates Icon" className="feature-icon" />
-            <h3>Best Exchange Rates</h3>
-            <p>
-              Enjoy competitive and transparent conversion rates with zero
-              hidden fees.
-            </p>
-          </div>
         </div>
       </section>
 
       <section id="testimonials" className="testimonials-section">
-        <h2 className="section-title">What Our Users Say</h2>
+        <h2 className="testimonials-title">What Our Users Say</h2>
         <div className="testimonial-container">
           <div className="testimonial-card">
             <img src={user1} alt="User 1" className="user-photo" />
@@ -88,7 +91,7 @@ export const Features = () => {
               “Kingsplug made my crypto-to-Naira conversion super fast. Highly
               recommended!”
             </p>
-            <h4 className="user-name">— Ada O.</h4>
+            <h4 className="user-name">— Ada Eze</h4>
           </div>
 
           <div className="testimonial-card">
@@ -97,7 +100,7 @@ export const Features = () => {
               “Their rates are fair and the support team is fantastic. Smooth
               experience every time.”
             </p>
-            <h4 className="user-name">— Tunde A.</h4>
+            <h4 className="user-name">— Tunde Fasehun</h4>
           </div>
 
           <div className="testimonial-card">
@@ -106,7 +109,16 @@ export const Features = () => {
               “I’ve tried several platforms — Kingsplug is easily the best for
               instant payouts.”
             </p>
-            <h4 className="user-name">— Faith N.</h4>
+            <h4 className="user-name">— Faith Azuka</h4>
+          </div>
+
+          <div className="testimonial-card">
+            <img src={user3} alt="User 3" className="user-photo" />
+            <p className="testimonial-text">
+              “I’ve tried several platforms — Kingsplug is easily the best for
+              instant payouts.”
+            </p>
+            <h4 className="user-name">— Tejiri Akpobome</h4>
           </div>
         </div>
       </section>
