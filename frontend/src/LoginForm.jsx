@@ -55,9 +55,9 @@ const LoginForm = () => {
                     <div className="error">{passwordError}</div>
                 </div>
                 <button type="submit" className="btnLogin">Log In</button>
-                <Link className="forgotPassword" to="/">Forgotten Password?</Link>
+                <Link className="forgotPassword" to="/forgot-password">Forgotten Password?</Link>
                 <hr />
-                <Link className="createAccount" to="/about">Don't Have an Account?</Link>   
+                <Link className="createAccount" to="/register">Don't Have an Account?</Link>   
             </form>
         </div>
     );

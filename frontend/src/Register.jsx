@@ -74,7 +74,7 @@ const Register = () => {
     
                 <button type="submit">Sign up</button>
 
-                <Link className="forgotPassword">Have an Account? Log in Here</Link>
+                <Link className="forgotPassword" to="/">Have an Account? Log in Here</Link>
             </form>
         </>
     );

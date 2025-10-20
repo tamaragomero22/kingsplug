@@ -20,7 +20,7 @@ const Dashboard = () => {
 
                 if (!response.ok) {
                     // If auth middleware returns 401, or for other errors
-                    navigate('/login');
+                    navigate('/');
                     return;
                 }
 
