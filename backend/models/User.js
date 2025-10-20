@@ -3,6 +3,14 @@ import validator from 'validator';
 import bcrypt from 'bcryptjs';
 
 const userSchema = new mongoose.Schema({
+    firstName: {
+        type: String,
+        required: [true, 'Please provide your first name'],
+    },
+    lastName: {
+        type: String,
+        required: [true, 'Please provide your last name'],
+    },
     email: {
         type: String,
         required: [true, 'Please provide an email'],
@@ -14,7 +22,28 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please provide a password'],
         minlength: [6, 'Password must be at least 6 characters long'],
-    }
+    },
+    verifyOtp: {
+        type: String,
+        default: '',
+    },
+    otpExpiry: {
+        type: Number,
+        default: 0,
+    },
+    isAccountVerified: {
+        type: Boolean,
+        default: false,
+    },
+    resetOtp: {
+        type: String,
+        default: '',
+    },
+    resetOtpExpiry: {
+        type: Number,
+        default: 0,
+    },
+
 }, {
     timestamps: true // Adds createdAt and updatedAt fields
 });

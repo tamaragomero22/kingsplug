@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 const handleErrors = (err) => {
     console.log(err.message, err.code); // For debugging
 
-    let errors = { email: '', password: '' };
+    let errors = { firstName: '', lastName: '', email: '', password: '' };
 
     // Duplicate email error
     if (err.code === 11000) {
@@ -51,10 +51,10 @@ const loginGet = (req, res) => {
 
 
 const registerPost = async (req, res) => {
-    const { email, password } = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
     try {
-        const user = await User.create({ email, password });
+        const user = await User.create({ firstName, lastName, email, password });
         const token = createToken(user._id);
         res.cookie('jwt', token, {
             httpOnly: true,
