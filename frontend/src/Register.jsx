@@ -69,7 +69,7 @@ const Register = () => {
     <>
       <Nav />
       <form className="registerForm" onSubmit={handleSubmit}>
-        <h2>Sign up</h2>
+        <h2>Create an Account</h2>
         <input
           type="text"
           name="firstName"

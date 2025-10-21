@@ -7,8 +7,7 @@ body {
 
 .registerForm {
   max-width: 400px;
-  margin: 30px auto;
-  margin-top: 8rem;
+  margin: 8rem auto 30px; /* Set top, sides, and bottom margin correctly */
   padding: 2rem;
   background-color: #1a1a2e;
   border-radius: 10px;
