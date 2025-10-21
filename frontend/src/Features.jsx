@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./Features.css";
 import instantIcon from "./assets/icons/instant.png";
 import secureIcon from "./assets/icons/secure.png";
@@ -7,6 +8,7 @@ import ratesIcon from "./assets/icons/rates.png";
 import user1 from "./assets/images/user1.png";
 import user2 from "./assets/images/user2.png";
 import user3 from "./assets/images/user3.png";
+import user4 from "./assets/images/user4.png";
 
 export const Features = () => {
   useEffect(() => {
@@ -40,7 +42,7 @@ export const Features = () => {
             />
             <h3>Instant Conversion</h3>
             <p>
-              Convert your Bitcoin, Ethereum, or USDT to Naira instantly — no
+              Convert your Bitcoin, Ethereum, or USDT to Naira instantly - no
               delays.
             </p>
           </div>
@@ -75,7 +77,7 @@ export const Features = () => {
             />
             <h3>24/7 Support</h3>
             <p>
-              We’re always available to assist you whenever you need help — day
+              We’re always available to assist you whenever you need help - day
               or night.
             </p>
           </div>
@@ -106,21 +108,25 @@ export const Features = () => {
           <div className="testimonial-card">
             <img src={user3} alt="User 3" className="user-photo" />
             <p className="testimonial-text">
-              “I’ve tried several platforms — Kingsplug is easily the best for
+              “I’ve tried several platforms - Kingsplug is easily the best for
               instant payouts.”
             </p>
-            <h4 className="user-name">— Faith Azuka</h4>
+            <h4 className="user-name">- Faith Azuka</h4>
           </div>
 
           <div className="testimonial-card">
-            <img src={user3} alt="User 3" className="user-photo" />
+            <img src={user4} alt="User 3" className="user-photo" />
             <p className="testimonial-text">
-              “I’ve tried several platforms — Kingsplug is easily the best for
-              instant payouts.”
+              “Kingsplug is indeed king in the game. From their easy-to-use
+              website, they're my no. 1 destination for exchange crypto.”
             </p>
-            <h4 className="user-name">— Tejiri Akpobome</h4>
+            <h4 className="user-name">- Tejiri Akpobome</h4>
           </div>
         </div>
+
+        <Link to="/register" className="cta-button">
+          Get Started Now
+        </Link>
       </section>
     </>
   );

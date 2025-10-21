@@ -22,9 +22,10 @@ export const Home = () => {
               </span>
             </h1>
             <h3>
-              Instantly get <b>&#8358;</b>aira equivalent of your crypto without
-              stress. <b>Kingsplug Exchange</b> is a cryptocurrency platform
-              that lets you convert you Bitcoin, ETH and USDT into Naira.
+              Kingsplug Exchange is a trusted cryptocurrency platform that
+              allows users to instantly convert their digital currencies - such
+              as Bitcoin (BTC), Ethereum (ETH), Tether (USDT) and more - into
+              ₦aira without stress.
             </h3>
           </div>
 
