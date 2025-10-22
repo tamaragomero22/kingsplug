@@ -61,7 +61,8 @@ const registerPost = async (req, res) => {
       user.verifyOtp = otp;
       // Set OTP to expire in 10 minutes
       user.otpExpiry = Date.now() + 10 * 60 * 1000;
-      await user.save();
+
+      await user.save(); // Save the OTP and expiry to the database
 
       const mailOptions = {
         from: process.env.SENDER_EMAIL,
@@ -74,14 +75,6 @@ This code will expire in 10 minutes.\n\nThanks,\nThe Kingsplug Team`,
       await getTransporter().sendMail(mailOptions);
       console.log(`Welcome email sent to ${user.email}`);
 
-      // Now that email is sent, create token and send response
-      const token = createToken(user._id);
-      res.cookie("jwt", token, {
-        httpOnly: true,
-        maxAge: maxAge * 1000,
-        sameSite: "None",
-        secure: true,
-      });
       res.status(201).json({ user: user._id });
     } catch (emailError) {
       console.error(`Failed to send welcome email:`, emailError);
@@ -102,6 +95,13 @@ const loginPost = async (req, res) => {
 
   try {
     const user = await User.login(email, password);
+
+    if (!user.isAccountVerified) {
+      return res.status(401).json({
+        errors: { email: "Please verify your email before logging in." },
+      });
+    }
+
     const token = createToken(user._id);
     res.cookie("jwt", token, {
       httpOnly: true,
@@ -127,31 +127,6 @@ const logoutGet = (req, res) => {
   });
   // It's good practice to send a confirmation or redirect.
   res.status(200).json({ message: "User logged out" });
-};
-
-const checkUser = (req, res, next) => {
-  // This middleware now runs on all requests, so we only
-  // check for a JWT on GET requests.
-  if (req.method !== "GET") {
-    return next();
-  }
-
-  const token = req.cookies.jwt;
-  if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
-      if (err) {
-        res.locals.user = null;
-        next();
-      } else {
-        let user = await User.findById(decodedToken.id);
-        res.locals.user = user; // Make user info available in subsequent middleware/handlers
-        next();
-      }
-    });
-  } else {
-    res.locals.user = null;
-    next();
-  }
 };
 
 // Send verification OTP to the user's email
@@ -225,7 +200,19 @@ const verifyEmail = async (req, res) => {
 
     await user.save();
 
-    return res.json({ success: true, message: "Email verified successfully" });
+    // Automatically log the user in by creating a JWT
+    const token = createToken(user._id);
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      maxAge: maxAge * 1000,
+      sameSite: "None",
+      secure: true,
+    });
+    // Return user info so the frontend knows the user is authenticated
+    return res.status(200).json({
+      success: true,
+      user: { id: user._id, email: user.email },
+    });
   } catch (error) {
     console.error("Error verifying OTP:", error);
     return res.status(500).json({ success: false, message: error.message });
@@ -238,7 +225,6 @@ export {
   registerPost,
   loginPost,
   logoutGet,
-  checkUser,
   sendVerifyOtp,
   verifyEmail,
 };

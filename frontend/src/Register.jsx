@@ -57,9 +57,9 @@ const Register = () => {
       // If registration is successful
       console.log("Registration successful:", data);
       // You can redirect the user or show a success message here
-      // For example: window.location.href = '/login';
-      // On successful registration, redirect to the services page.
-      navigate("/dashboard");
+      // On successful registration, redirect to the email verification page.
+      const userId = data.user;
+      navigate(`/verify-email?userId=${userId}`);
     } catch (err) {
       console.error(err.message);
     }

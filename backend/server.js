@@ -4,8 +4,8 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
+import { requireAuth } from "./middleware/authMiddleware.js";
 import authRoutes from "./routes/authRoutes.js";
-import { checkUser } from "./controllers/authController.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
 
 const app = express();
@@ -22,12 +22,9 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
-// API Routes
-// Apply checkUser middleware to all incoming requests.
-// The checkUser function itself will handle logic for GET requests.
-app.use(checkUser);
+// Apply requireAuth middleware to protect the dashboard route
+app.use("/api/dashboard", requireAuth, dashboardRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/api", dashboardRoutes); // Use the protected dashboard routes
 
 const startServer = async () => {
   try {
