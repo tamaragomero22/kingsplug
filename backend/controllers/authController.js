@@ -55,13 +55,21 @@ const registerPost = async (req, res) => {
   try {
     const user = await User.create({ firstName, lastName, email, password });
 
-    // Send welcome email after successful registration
+    // Generate and save OTP, then send welcome/verification email
     try {
+      const otp = String(Math.floor(100000 + Math.random() * 900000));
+      user.verifyOtp = otp;
+      // Set OTP to expire in 10 minutes
+      user.otpExpiry = Date.now() + 10 * 60 * 1000;
+      await user.save();
+
       const mailOptions = {
         from: process.env.SENDER_EMAIL,
         to: user.email,
-        subject: "Welcome to Kingsplug Exchange!",
-        text: `Hi ${user.firstName},\n\nWelcome to Kingsplug Exchange. Your account has been created successfully.\n\nThanks,\nThe Kingsplug Team`,
+        subject: "Verify Your Account on Kingsplug Exchange",
+        text: `Hi ${user.firstName},\n\nWelcome to Kingsplug Exchange!
+Your verification OTP is: ${otp}
+This code will expire in 10 minutes.\n\nThanks,\nThe Kingsplug Team`,
       };
       await getTransporter().sendMail(mailOptions);
       console.log(`Welcome email sent to ${user.email}`);
@@ -146,4 +154,91 @@ const checkUser = (req, res, next) => {
   }
 };
 
-export { registerGet, loginGet, registerPost, loginPost, logoutGet, checkUser };
+// Send verification OTP to the user's email
+const sendVerifyOtp = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    if (user.isAccountVerified) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Account already verified" });
+    }
+
+    const otp = String(Math.floor(100000 + Math.random() * 900000));
+    user.verifyOtp = otp;
+    user.otpExpiry = Date.now() + 10 * 60 * 1000; // 10 minutes from now
+
+    await user.save();
+
+    const mailOptions = {
+      from: process.env.SENDER_EMAIL,
+      to: user.email,
+      subject: "Account Verification OTP",
+      text: `Your new verification OTP is: ${otp}. This code will expire in 10 minutes.`,
+    };
+
+    await getTransporter().sendMail(mailOptions);
+
+    return res.json({
+      success: true,
+      message: "Verification OTP sent to your email",
+    });
+  } catch (error) {
+    console.error("Error finding user:", error);
+    return res.json({ success: false, message: error.message });
+  }
+};
+
+const verifyEmail = async (req, res) => {
+  const { userId, otp } = req.body;
+
+  if (!userId || !otp) {
+    return res.status(400).json({ success: false, message: "Missing details" });
+  }
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    if (user.verifyOtp !== otp) {
+      return res.status(400).json({ success: false, message: "Invalid OTP" });
+    }
+
+    if (user.otpExpiry < Date.now()) {
+      return res.status(400).json({ success: false, message: "OTP expired" });
+    }
+
+    user.isAccountVerified = true;
+    user.verifyOtp = "";
+    user.otpExpiry = 0;
+
+    await user.save();
+
+    return res.json({ success: true, message: "Email verified successfully" });
+  } catch (error) {
+    console.error("Error verifying OTP:", error);
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export {
+  registerGet,
+  loginGet,
+  registerPost,
+  loginPost,
+  logoutGet,
+  checkUser,
+  sendVerifyOtp,
+  verifyEmail,
+};

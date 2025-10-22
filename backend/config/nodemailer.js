@@ -9,8 +9,8 @@ const getTransporter = () => {
       port: 465,
       secure: true,
       auth: {
-        user: process.env.SENDER_EMAIL, // Your Gmail address
-        pass: process.env.SENDER_PASSWORD, // Your App Password
+        user: process.env.SENDER_EMAIL,
+        pass: process.env.SENDER_PASSWORD,
       },
     });
   }
