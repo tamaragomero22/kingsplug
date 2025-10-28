@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import { requireAuth } from "./middleware/authMiddleware.js";
 import authRoutes from "./routes/authRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -25,6 +26,7 @@ app.use(cookieParser());
 // Apply requireAuth middleware to protect the dashboard route
 app.use("/api/dashboard", requireAuth, dashboardRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/user", requireAuth, userRoutes);
 
 const startServer = async () => {
   try {

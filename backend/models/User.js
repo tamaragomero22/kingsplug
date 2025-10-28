@@ -44,6 +44,41 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    gender: {
+      type: String,
+      enum: ["male", "female", "other"],
+      default: null,
+    },
+    dateOfBirth: {
+      type: Date,
+      default: null,
+    },
+    mobileNumber: {
+      type: String,
+      unique: true,
+      sparse: true,
+      validate: {
+        validator: function (v) {
+          return v === null || validator.isMobilePhone(v, "any");
+        },
+        message: (props) => `${props.value} is not a valid mobile number!`,
+      },
+      default: null,
+    },
+    bvn: {
+      type: String,
+      unique: true,
+      sparse: true,
+      minlength: [11, "BVN must be 11 digits"],
+      maxlength: [11, "BVN must be 11 digits"],
+      validate: {
+        validator: function (v) {
+          return v === null || /^\d{11}$/.test(v);
+        },
+        message: (props) => `${props.value} is not a valid 11-digit BVN!`,
+      },
+      default: null,
+    },
   },
   {
     timestamps: true, // Adds createdAt and updatedAt fields in the database

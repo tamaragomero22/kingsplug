@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Nav } from "./Nav";
+import { useNavigate } from "react-router-dom";
 import { Footer } from "./Footer";
 import "./KYC.css";
 
@@ -12,6 +13,10 @@ const KYC = () => {
     mobileNumber: "",
     bvn: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -43,11 +48,38 @@ const KYC = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Here you would typically send the data to your backend
-    console.log("KYC Data Submitted:", formData);
-    alert("KYC information submitted successfully!");
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission
+    setLoading(true);
+    setError(null);
+    setSuccess(false);
+
+    try {
+      const response = await fetch("http://localhost:4000/api/user/kyc", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.message || "Failed to submit KYC information.");
+        return;
+      }
+
+      setSuccess(true);
+      setTimeout(() => {
+        alert(data.message || "KYC information submitted successfully!");
+        navigate("/dashboard"); // Redirect to dashboard on success
+      }, 1000);
+    } catch (err) {
+      console.error("Error submitting KYC:", err);
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -96,6 +128,7 @@ const KYC = () => {
               <option value="">Select Gender</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
+              <option value="other">Other</option>
             </select>
           </div>
 
@@ -114,9 +147,10 @@ const KYC = () => {
           <div className="form-group">
             <label htmlFor="mobileNumber">Mobile Number</label>
             <input
-              type="number"
+              type="tel"
               id="mobileNumber"
               name="mobileNumber"
+              placeholder="e.g., +2348012345678"
               value={formData.mobileNumber}
               onChange={handleChange}
               required
@@ -126,20 +160,28 @@ const KYC = () => {
           <div className="form-group">
             <label htmlFor="bvn">BVN (Bank Verification Number)</label>
             <input
-              type="number"
+              type="text"
               id="bvn"
               name="bvn"
               placeholder="Enter your 11-digit BVN"
               value={formData.bvn}
               onChange={handleChange}
               required
+              pattern="^\d{11}$"
+              title="BVN must be an 11-digit number"
               minLength="11"
               maxLength="11"
             />
           </div>
 
-          <button type="submit" className="cta-button">
-            Submit KYC
+          {loading && <p className="loading-message">Submitting...</p>}
+          {error && <p className="error-message">{error}</p>}
+          {success && (
+            <p className="success-message">KYC submitted successfully!</p>
+          )}
+
+          <button type="submit" className="cta-button" disabled={loading}>
+            {loading ? "Submitting..." : "Submit KYC"}
           </button>
         </form>
       </div>
