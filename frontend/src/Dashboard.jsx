@@ -5,13 +5,11 @@ import "./Dashboard.css"; // Import the new dashboard styles
 import { Footer } from "./Footer";
 
 const Dashboard = () => {
-  const [priceData, setPriceData] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
   const [userEmail, setUserEmail] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
 
-  const fetchDashboardData = async (isInitialLoad = false) => {
+  const fetchDashboardData = async () => {
     try {
       // The browser will automatically send the 'jwt' cookie with cross-origin requests
       const response = await fetch("http://localhost:4000/api/dashboard/data", {
@@ -22,50 +20,45 @@ const Dashboard = () => {
 
       if (!response.ok) {
         // If auth middleware returns 401, or for other errors
-        // Only navigate away on the initial load failure.
-        if (isInitialLoad) {
-          navigate("/");
-        }
+        navigate("/");
         return;
       }
 
       const data = await response.json();
-      setPriceData(data.priceData);
       setUserEmail(data.user.email);
     } catch (error) {
       console.error("Failed to fetch dashboard data:", error.message);
-      // Only navigate away on initial load failure.
-      if (isInitialLoad) {
-        navigate("/");
-      }
-    } finally {
-      if (isInitialLoad) {
-        setIsLoading(false);
-      }
+      navigate("/");
     }
   };
 
   useEffect(() => {
     // If user data is passed from the login/verify page, use it immediately.
     // This avoids a race condition where the page fetches data before auth is confirmed.
-    let initialLoadPerformed = false;
     if (location.state?.user) {
       setUserEmail(location.state.user.email);
-      // We have the user email, so we can skip the initial fetch and just start polling.
-      // We also mark the initial load as "done" and set loading to false.
-      initialLoadPerformed = true;
-      setIsLoading(false);
+    } else {
+      // Only fetch immediately if we didn't get user data from the navigation state.
+      fetchDashboardData();
     }
-
-    // Only fetch immediately if we didn't get user data from the navigation state.
-    if (!initialLoadPerformed) {
-      fetchDashboardData(true);
-    }
-
-    const intervalId = setInterval(() => fetchDashboardData(false), 10000); // Fetch every 10 seconds
-
-    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+    // The interval for fetching price data is no longer needed.
   }, [location.state]);
+
+  // Effect for fade-up animation
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+    document.querySelectorAll(".fade-up").forEach((el) => observer.observe(el));
+    return () => observer.disconnect(); // Cleanup observer on component unmount
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -87,15 +80,27 @@ const Dashboard = () => {
       <Nav userEmail={userEmail} onLogout={handleLogout} />
       <div className="dashboard-container">
         <div className="dashboard-header">
-          <h2>{isLoading ? "Loading..." : "Dashboard"}</h2>
+          <h2>Dashboard</h2>
         </div>
         <div className="dashboard-content">
-          <div className="price-display">
-            <p>
-              {priceData
-                ? `Bitcoin Price: ₦${priceData.bitcoin.ngn.toLocaleString()}`
-                : "Loading price..."}{" "}
-            </p>
+          <div className="feature-card fade-up">
+            <h3>BTC Rate:</h3>
+            <p>&#8358;1,460</p>
+          </div>
+
+          <div className="feature-card fade-up">
+            <h3>USDT Rate</h3>
+            <p>&#8358;1,470</p>
+          </div>
+
+          <div className="feature-card fade-up">
+            <h3>ETH Rate</h3>
+            <p>&#8358;1,420</p>
+          </div>
+
+          <div className="feature-card fade-up">
+            <h3>USDC Rate</h3>
+            <p>&#8358;1,460</p>
           </div>
         </div>
       </div>
