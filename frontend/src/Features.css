@@ -9,10 +9,6 @@ section {
   color: #d1cccc;
 }
 
-.features-section {
-  margin-top: 30px;
-}
-
 .features-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));

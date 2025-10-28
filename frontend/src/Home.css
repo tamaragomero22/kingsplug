@@ -11,7 +11,7 @@ body {
 .container {
   max-width: 1000px;
   margin: 6rem auto 0; /* Adjust top margin to account for fixed navbar */
-  padding: 2rem 0;
+
   color: #fff;
 }
 

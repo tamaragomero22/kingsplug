@@ -84,6 +84,7 @@ const Dashboard = () => {
         userEmail={userEmail}
         firstName={firstName}
         onLogout={handleLogout}
+        logoLinkTo="/dashboard"
       />
       <div className="dashboard-container">
         <div className="dashboard-header">
