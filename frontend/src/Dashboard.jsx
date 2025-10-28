@@ -8,6 +8,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [userEmail, setUserEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
 
   const fetchDashboardData = async () => {
     try {
@@ -26,6 +27,7 @@ const Dashboard = () => {
 
       const data = await response.json();
       setUserEmail(data.user.email);
+      setFirstName(data.user.firstName);
     } catch (error) {
       console.error("Failed to fetch dashboard data:", error.message);
       navigate("/");
@@ -37,6 +39,7 @@ const Dashboard = () => {
     // This avoids a race condition where the page fetches data before auth is confirmed.
     if (location.state?.user) {
       setUserEmail(location.state.user.email);
+      setFirstName(location.state.user.firstName);
     } else {
       // Only fetch immediately if we didn't get user data from the navigation state.
       fetchDashboardData();
@@ -77,7 +80,11 @@ const Dashboard = () => {
 
   return (
     <>
-      <Nav userEmail={userEmail} onLogout={handleLogout} />
+      <Nav
+        userEmail={userEmail}
+        firstName={firstName}
+        onLogout={handleLogout}
+      />
       <div className="dashboard-container">
         <div className="dashboard-header">
           <h2>Dashboard</h2>

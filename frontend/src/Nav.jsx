@@ -4,7 +4,7 @@ import "./Nav.css";
 import homeIcon from "./assets/home.svg";
 import logo from "./assets/kingsplug.png";
 
-export const Nav = ({ userEmail, onLogout, logoLinkTo = "/" }) => {
+export const Nav = ({ userEmail, firstName, onLogout, logoLinkTo = "/" }) => {
   return (
     <header>
       <div id="headerContainer">
@@ -25,7 +25,7 @@ export const Nav = ({ userEmail, onLogout, logoLinkTo = "/" }) => {
                 <li>
                   <NavLink to="/dashboard">Wallet</NavLink>
                 </li>
-                <li className="user-email">{userEmail}</li>
+                <li className="user-email">Hi {firstName}</li>
                 <li>
                   <button onClick={onLogout} className="nav-logout-btn">
                     Logout
