@@ -211,7 +211,12 @@ const verifyEmail = async (req, res) => {
     // Return user info so the frontend knows the user is authenticated
     return res.status(200).json({
       success: true,
-      user: { id: user._id, email: user.email, firstName: user.firstName },
+      user: {
+        id: user._id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+      },
     });
   } catch (error) {
     console.error("Error verifying OTP:", error);

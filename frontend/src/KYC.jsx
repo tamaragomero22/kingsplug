@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Nav } from "./Nav";
 import { Footer } from "./Footer";
 import "./KYC.css";
@@ -12,6 +12,28 @@ const KYC = () => {
     mobileNumber: "",
     bvn: "",
   });
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:4000/api/dashboard/data",
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setFormData((prev) => ({ ...prev, ...data.user }));
+        }
+      } catch (error) {
+        console.error("Failed to fetch user data for KYC:", error);
+      }
+    };
+    fetchUserData();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

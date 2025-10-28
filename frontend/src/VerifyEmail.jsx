@@ -50,7 +50,11 @@ const VerifyEmail = () => {
       setTimeout(() => {
         // Pass user data to the dashboard to avoid a race condition on data fetching.
         // The dashboard can use this data immediately without having to fetch it.
-        const user = { email: data.user.email, firstName: data.user.firstName };
+        const user = {
+          email: data.user.email,
+          firstName: data.user.firstName,
+          lastName: data.user.lastName,
+        };
         navigate("/dashboard", { state: { user } });
       }, 3000);
     } catch (err) {
