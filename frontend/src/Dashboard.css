@@ -54,7 +54,9 @@
 .cta-button {
   display: inline-block;
   margin-top: 2rem;
-  padding: 1rem 2.5rem;
+  padding: 1rem 0; /* Adjust padding for fixed width */
+  width: 200px;
+  text-align: center;
   font-size: 1.1rem;
   font-weight: 600;
   color: #0c131f;
@@ -69,4 +71,17 @@
 .cta-button:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 20px rgba(128, 255, 234, 0.2);
+}
+
+.dashboard-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.kyc-link {
+  margin-top: 1rem;
+  color: #9580ff;
+  text-decoration: none;
 }

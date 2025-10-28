@@ -1,0 +1,55 @@
+.kyc-container {
+  max-width: 600px;
+  margin: 8rem auto 3rem;
+  padding: 2rem;
+  background-color: #1a1a2e;
+  color: #d1cccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
+}
+
+.kyc-form h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.kyc-form p {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #a0a0b8;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid #3a3a5e;
+  border-radius: 5px;
+  background-color: #2a2a4a;
+  color: #d1cccc;
+  font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #9580ff;
+  box-shadow: 0 0 0 2px rgba(149, 128, 255, 0.3);
+}
+
+.kyc-form .cta-button {
+  width: 100%;
+  margin-top: 1rem;
+}

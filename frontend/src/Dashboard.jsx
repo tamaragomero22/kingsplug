@@ -112,9 +112,21 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <Link to="/register" className="cta-button">
-          Convert to Naira
-        </Link>
+        <div className="dashboard-actions">
+          <button
+            onClick={() => {
+              alert(
+                "KYC completion is necessary! This enables us to verify every user of Kingsplug. Once you have completed KYC, you're protected from fraud and other financial crimes. After the completion, your wallet address shall be provided. Click the link in the dashboard to complete your KYC."
+              );
+            }}
+            className="cta-button"
+          >
+            Convert to Naira
+          </button>
+          <Link to="/kyc" className="kyc-link">
+            Complete my KYC
+          </Link>
+        </div>
       </div>
       <Footer />
     </>
