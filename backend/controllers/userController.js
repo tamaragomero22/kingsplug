@@ -28,7 +28,15 @@ export const submitKYC = async (req, res) => {
 
     const user = await User.findByIdAndUpdate(
       userId,
-      { firstName, lastName, gender, dateOfBirth, mobileNumber, bvn },
+      {
+        firstName,
+        lastName,
+        gender,
+        dateOfBirth,
+        mobileNumber,
+        bvn,
+        isKycVerified: true,
+      },
       { new: true, runValidators: true }
     );
 

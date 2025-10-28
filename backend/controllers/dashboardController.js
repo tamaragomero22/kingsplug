@@ -41,6 +41,7 @@ const getDashboardData = async (req, res) => {
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
+      isKycVerified: user.isKycVerified,
     }, // Send user object separately
   });
 };

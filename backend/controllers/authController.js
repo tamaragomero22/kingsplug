@@ -216,6 +216,7 @@ const verifyEmail = async (req, res) => {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
+        isKycVerified: user.isKycVerified,
       },
     });
   } catch (error) {

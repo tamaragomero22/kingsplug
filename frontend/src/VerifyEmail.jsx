@@ -54,6 +54,7 @@ const VerifyEmail = () => {
           email: data.user.email,
           firstName: data.user.firstName,
           lastName: data.user.lastName,
+          isKycVerified: data.user.isKycVerified,
         };
         navigate("/dashboard", { state: { user } });
       }, 3000);

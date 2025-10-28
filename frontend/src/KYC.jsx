@@ -13,9 +13,12 @@ const KYC = () => {
     mobileNumber: "",
     bvn: "",
   });
+  const [pageIsLoading, setPageIsLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,10 +34,26 @@ const KYC = () => {
         );
         if (response.ok) {
           const data = await response.json();
-          setFormData((prev) => ({ ...prev, ...data.user }));
+          const user = data.user;
+          // Format date for the input[type="date"] which expects YYYY-MM-DD
+          if (user.dateOfBirth) {
+            user.dateOfBirth = new Date(user.dateOfBirth)
+              .toISOString()
+              .split("T")[0];
+          }
+
+          setFormData((prev) => ({
+            ...prev,
+            ...user,
+            gender: user.gender || "",
+          }));
+          setUserEmail(user.email);
+          setFirstName(user.firstName);
         }
       } catch (error) {
         console.error("Failed to fetch user data for KYC:", error);
+      } finally {
+        setPageIsLoading(false);
       }
     };
     fetchUserData();
@@ -82,9 +101,13 @@ const KYC = () => {
     }
   };
 
+  if (pageIsLoading) {
+    return <div>Loading...</div>; // Or a spinner component
+  }
+
   return (
     <>
-      <Nav />
+      <Nav userEmail={userEmail} firstName={firstName} />
       <div className="kyc-container">
         <form className="kyc-form" onSubmit={handleSubmit}>
           <h2>KYC Verification</h2>

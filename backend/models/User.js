@@ -79,6 +79,10 @@ const userSchema = new mongoose.Schema(
       },
       default: null,
     },
+    isKycVerified: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true, // Adds createdAt and updatedAt fields in the database

@@ -9,6 +9,8 @@ const Dashboard = () => {
   const location = useLocation();
   const [userEmail, setUserEmail] = useState("");
   const [firstName, setFirstName] = useState("");
+  const [isKycComplete, setIsKycComplete] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchDashboardData = async () => {
     try {
@@ -28,9 +30,12 @@ const Dashboard = () => {
       const data = await response.json();
       setUserEmail(data.user.email);
       setFirstName(data.user.firstName);
+      setIsKycComplete(data.user.isKycVerified);
     } catch (error) {
       console.error("Failed to fetch dashboard data:", error.message);
       navigate("/");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -40,6 +45,8 @@ const Dashboard = () => {
     if (location.state?.user) {
       setUserEmail(location.state.user.email);
       setFirstName(location.state.user.firstName);
+      setIsKycComplete(location.state.user.isKycVerified);
+      setIsLoading(false);
     } else {
       // Only fetch immediately if we didn't get user data from the navigation state.
       fetchDashboardData();
@@ -49,6 +56,10 @@ const Dashboard = () => {
 
   // Effect for fade-up animation
   useEffect(() => {
+    if (isLoading) {
+      return; // Don't set up the observer until loading is complete
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -59,9 +70,10 @@ const Dashboard = () => {
       },
       { threshold: 0.3 }
     );
-    document.querySelectorAll(".fade-up").forEach((el) => observer.observe(el));
+    const elements = document.querySelectorAll(".fade-up");
+    elements.forEach((el) => observer.observe(el));
     return () => observer.disconnect(); // Cleanup observer on component unmount
-  }, []);
+  }, [isLoading]);
 
   const handleLogout = async () => {
     try {
@@ -77,6 +89,10 @@ const Dashboard = () => {
       // Optionally handle logout errors, e.g., show a notification
     }
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Or a spinner component
+  }
 
   return (
     <>
@@ -112,21 +128,23 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="dashboard-actions">
-          <button
-            onClick={() => {
-              alert(
-                "KYC completion is necessary! This enables us to verify every user of Kingsplug. Once you have completed KYC, you're protected from fraud and other financial crimes. After the completion, your wallet address shall be provided. Click the link in the dashboard to complete your KYC."
-              );
-            }}
-            className="cta-button"
-          >
-            Convert to Naira
-          </button>
-          <Link to="/kyc" className="kyc-link">
-            Complete my KYC
-          </Link>
-        </div>
+        {!isKycComplete && (
+          <div className="dashboard-actions">
+            <button
+              onClick={() => {
+                alert(
+                  "KYC completion is necessary! This enables us to verify every user of Kingsplug. Once you have completed KYC, you're protected from fraud and other financial crimes. After the completion, your wallet address shall be provided. Click the link in the dashboard to complete your KYC."
+                );
+              }}
+              className="cta-button"
+            >
+              Convert to Naira
+            </button>
+            <Link to="/kyc" className="kyc-link">
+              Complete my KYC
+            </Link>
+          </div>
+        )}
       </div>
       <Footer />
     </>
