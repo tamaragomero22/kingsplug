@@ -111,6 +111,10 @@ const Dashboard = () => {
             <p>&#8358;1,460</p>
           </div>
         </div>
+
+        <Link to="/register" className="cta-button">
+          Convert to Naira
+        </Link>
       </div>
       <Footer />
     </>
