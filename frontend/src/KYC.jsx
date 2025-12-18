@@ -151,7 +151,6 @@ const KYC = () => {
               <option value="">Select Gender</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
-              <option value="other">Other</option>
             </select>
           </div>
 
@@ -170,18 +169,22 @@ const KYC = () => {
           <div className="form-group">
             <label htmlFor="mobileNumber">Mobile Number</label>
             <input
-              type="tel"
+              type="number"
               id="mobileNumber"
               name="mobileNumber"
-              placeholder="e.g., +2348012345678"
               value={formData.mobileNumber}
               onChange={handleChange}
               required
+              minLength="11"
+              maxLength="12"
+              pattern="^\d{11,12}$"
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="bvn">BVN (Bank Verification Number)</label>
+            <label htmlFor="bvn">
+              BVN (BVN is used to confirm your identity)
+            </label>
             <input
               type="text"
               id="bvn"
