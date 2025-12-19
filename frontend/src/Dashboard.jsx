@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { Nav } from "./Nav";
 import "./Dashboard.css"; // Import the new dashboard styles
+import SendBitcoin from "./SendBitcoin";
 import { Footer } from "./Footer";
 
 const Dashboard = () => {
@@ -145,6 +146,8 @@ const Dashboard = () => {
             </Link>
           </div>
         )}
+
+        {isKycComplete && <SendBitcoin />}
       </div>
       <Footer />
     </>

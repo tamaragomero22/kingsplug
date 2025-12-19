@@ -73,17 +73,29 @@ const KYC = () => {
     setError(null);
     setSuccess(false);
 
+    // Create a payload with only the necessary fields to avoid sending extra data
+    // (like email, _id, etc.) that might cause backend validation errors.
+    const payload = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      gender: formData.gender,
+      dateOfBirth: formData.dateOfBirth,
+      mobileNumber: formData.mobileNumber,
+      bvn: formData.bvn,
+    };
+
     try {
       const response = await fetch("http://localhost:4000/api/user/kyc", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
+        console.error("KYC Submission Error:", data);
         setError(data.message || "Failed to submit KYC information.");
         return;
       }

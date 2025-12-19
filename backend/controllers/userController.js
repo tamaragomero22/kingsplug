@@ -49,17 +49,27 @@ export const submitKYC = async (req, res) => {
       .json({ message: "KYC information submitted successfully!", user });
   } catch (error) {
     console.error("Error submitting KYC:", error);
+
+    // Handle generic 500 errors or specific mongoose errors
     if (error.code === 11000) {
       // Duplicate key error
-      const field = Object.keys(error.keyPattern)[0];
+      const field = error.keyPattern ? Object.keys(error.keyPattern)[0] : "field";
       return res
         .status(409)
         .json({ message: `This ${field} is already registered.` });
     }
+
     if (error.name === "ValidationError") {
       const errors = Object.values(error.errors).map((err) => err.message);
       return res.status(400).json({ message: errors.join(", ") });
     }
-    res.status(500).json({ message: "Failed to submit KYC information." });
+
+    if (error.name === "CastError") {
+      return res.status(400).json({ message: "Invalid data format." });
+    }
+
+    res
+      .status(500)
+      .json({ message: "Failed to submit KYC information.", error: error.message });
   }
 };
