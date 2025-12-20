@@ -4,7 +4,13 @@ import "./Nav.css";
 import homeIcon from "./assets/home.svg";
 import logo from "./assets/kingsplug.png";
 
-export const Nav = ({ userEmail, firstName, onLogout, logoLinkTo = "/" }) => {
+export const Nav = ({
+  userEmail,
+  firstName,
+  onLogout,
+  logoLinkTo = "/",
+  hideSignUp = false,
+}) => {
   return (
     <header>
       <div id="headerContainer">
@@ -45,9 +51,11 @@ export const Nav = ({ userEmail, firstName, onLogout, logoLinkTo = "/" }) => {
                     About
                   </HashLink>
                 </li>
-                <li>
-                  <NavLink to="/register">Sign up</NavLink>
-                </li>
+                {!hideSignUp && (
+                  <li>
+                    <NavLink to="/register">Sign up</NavLink>
+                  </li>
+                )}
               </>
             )}
           </ul>

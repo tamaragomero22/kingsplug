@@ -119,7 +119,7 @@ const KYC = () => {
 
   return (
     <>
-      <Nav userEmail={userEmail} firstName={firstName} />
+      <Nav userEmail={userEmail} firstName={firstName} hideSignUp={true} />
       <div className="kyc-container">
         <form className="kyc-form" onSubmit={handleSubmit}>
           <h2>KYC Verification</h2>
