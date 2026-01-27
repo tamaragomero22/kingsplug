@@ -34,7 +34,7 @@ export default function SendBitcoin() {
   return (
     <div className="send-container">
       <button onClick={fetchAddress} className="send-btn" disabled={loading}>
-        {loading ? "Generating..." : "Send Bitcoin"}
+        {loading ? "Generating..." : "Convert Bitcoin to Cash"}
       </button>
 
       {error && <p className="error-message">{error}</p>}

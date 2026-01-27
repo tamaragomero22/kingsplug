@@ -3,6 +3,8 @@ import User from "../models/User.js";
 
 const requireAuth = (req, res, next) => {
   const token = req.cookies.jwt;
+  console.log("requireAuth middleware. Cookies:", req.cookies);
+  console.log("requireAuth middleware. JWT Token present:", !!token);
 
   // Check if JSON web token exists & is verified
   if (token) {
@@ -12,13 +14,21 @@ const requireAuth = (req, res, next) => {
         // If token is invalid, deny access
         return res.status(401).json({ error: "Not authorized, token failed" });
       } else {
-        // The token is valid, find the user and attach to the request
-        const user = await User.findById(decodedToken.id);
-        req.user = user; // Make user info available on the request
-
-        console.log(decodedToken);
-
-        next();
+        try {
+          // The token is valid, find the user and attach to the request
+          const user = await User.findById(decodedToken.id);
+          if (!user) {
+            console.warn(`Auth failed: User ${decodedToken.id} not found.`);
+            return res
+              .status(401)
+              .json({ error: "Not authorized, user not found" });
+          }
+          req.user = user; // Make user info available on the request
+          next();
+        } catch (dbErr) {
+          console.error("Database error in requireAuth:", dbErr);
+          return res.status(500).json({ error: "Internal server error during authentication" });
+        }
       }
     });
   } else {

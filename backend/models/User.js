@@ -59,11 +59,10 @@ const userSchema = new mongoose.Schema(
       sparse: true,
       validate: {
         validator: function (v) {
-          return v === null || validator.isMobilePhone(v, "any");
+          return !v || validator.isMobilePhone(v, "any");
         },
         message: (props) => `${props.value} is not a valid mobile number!`,
       },
-      default: null,
     },
     bvn: {
       type: String,
@@ -73,11 +72,10 @@ const userSchema = new mongoose.Schema(
       maxlength: [11, "BVN must be 11 digits"],
       validate: {
         validator: function (v) {
-          return v === null || /^\d{11}$/.test(v);
+          return !v || /^\d{11}$/.test(v);
         },
         message: (props) => `${props.value} is not a valid 11-digit BVN!`,
       },
-      default: null,
     },
     isKycVerified: {
       type: Boolean,

@@ -11,7 +11,6 @@ const KYC = () => {
     gender: "",
     dateOfBirth: "",
     mobileNumber: "",
-    bvn: "",
   });
   const [pageIsLoading, setPageIsLoading] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -81,7 +80,6 @@ const KYC = () => {
       gender: formData.gender,
       dateOfBirth: formData.dateOfBirth,
       mobileNumber: formData.mobileNumber,
-      bvn: formData.bvn,
     };
 
     try {
@@ -92,11 +90,22 @@ const KYC = () => {
         body: JSON.stringify(payload),
       });
 
-      const data = await response.json();
+      const contentType = response.headers.get("content-type");
+      let data;
+      if (contentType && contentType.includes("application/json")) {
+        data = await response.json();
+      } else {
+        const text = await response.text();
+        console.error("Non-JSON response received:", text);
+        setError(`Server returned an unexpected response format (${response.status}).`);
+        return;
+      }
 
       if (!response.ok) {
         console.error("KYC Submission Error:", data);
-        setError(data.message || "Failed to submit KYC information.");
+        setError(
+          data.error || data.message || "Failed to submit KYC information."
+        );
         return;
       }
 
@@ -107,7 +116,7 @@ const KYC = () => {
       }, 1000);
     } catch (err) {
       console.error("Error submitting KYC:", err);
-      setError("An unexpected error occurred. Please try again.");
+      setError(`An unexpected error occurred: ${err.message}. Please try again.`);
     } finally {
       setLoading(false);
     }
@@ -193,24 +202,7 @@ const KYC = () => {
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="bvn">
-              BVN (BVN is used to confirm your identity)
-            </label>
-            <input
-              type="text"
-              id="bvn"
-              name="bvn"
-              placeholder="Enter your 11-digit BVN"
-              value={formData.bvn}
-              onChange={handleChange}
-              required
-              pattern="^\d{11}$"
-              title="BVN must be an 11-digit number"
-              minLength="11"
-              maxLength="11"
-            />
-          </div>
+
 
           {loading && <p className="loading-message">Submitting...</p>}
           {error && <p className="error-message">{error}</p>}

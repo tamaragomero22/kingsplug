@@ -15,14 +15,28 @@ const PORT = process.env.PORT || 4000;
 
 // Middlewares
 const corsOptions = {
-  // Replace with your frontend's actual origin.
-  // This is crucial for security and for cookies to work.
-  origin: "http://localhost:5173",
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    // Allow any localhost origin
+    if (origin.startsWith("http://localhost") || origin.startsWith("http://127.0.0.1")) {
+      return callback(null, true);
+    }
+    return callback(new Error("Not allowed by CORS"));
+  },
   credentials: true,
 };
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
+
+// Debug logging middleware
+app.use((req, res, next) => {
+  console.log(`Incoming request: ${req.method} ${req.url}`);
+  console.log("Origin:", req.headers.origin);
+  console.log("Cookies:", req.cookies);
+  next();
+});
 
 // Apply requireAuth middleware to protect the dashboard route
 app.use("/api/dashboard", requireAuth, dashboardRoutes);

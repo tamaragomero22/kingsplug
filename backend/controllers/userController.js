@@ -2,9 +2,15 @@ import User from "../models/User.js";
 import validator from "validator";
 
 export const submitKYC = async (req, res) => {
-  const { firstName, lastName, gender, dateOfBirth, mobileNumber, bvn } =
+  const { firstName, lastName, gender, dateOfBirth, mobileNumber } =
     req.body;
-  const userId = req.user._id; // From requireAuth middleware
+  const user_id = req.user ? req.user._id : null; // From requireAuth middleware
+
+  console.log(`KYC submission attempt for user_id: ${user_id}`);
+
+  if (!user_id) {
+    return res.status(401).json({ message: "Not authorized, user not found." });
+  }
 
   try {
     // Basic validation
@@ -14,27 +20,23 @@ export const submitKYC = async (req, res) => {
       !gender ||
       !dateOfBirth ||
       !mobileNumber ||
-      !bvn
+      !mobileNumber
     ) {
       return res.status(400).json({ message: "All KYC fields are required." });
     }
 
     // More specific validation can be added here if needed
-    if (!/^\d{11}$/.test(bvn)) {
-      return res
-        .status(400)
-        .json({ message: "BVN must be an 11-digit number." });
-    }
+
 
     const user = await User.findByIdAndUpdate(
-      userId,
+      user_id,
       {
         firstName,
         lastName,
         gender,
         dateOfBirth,
         mobileNumber,
-        bvn,
+        mobileNumber,
         isKycVerified: true,
       },
       { new: true, runValidators: true }
@@ -68,8 +70,9 @@ export const submitKYC = async (req, res) => {
       return res.status(400).json({ message: "Invalid data format." });
     }
 
-    res
-      .status(500)
-      .json({ message: "Failed to submit KYC information.", error: error.message });
+    res.status(500).json({
+      message: "Failed to submit KYC information.",
+      error: error.message,
+    });
   }
 };

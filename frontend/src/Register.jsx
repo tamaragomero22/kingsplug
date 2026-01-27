@@ -16,6 +16,7 @@ const Register = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [repeatPasswordError, setRepeatPasswordError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,6 +33,8 @@ const Register = () => {
       return;
     }
 
+    console.log("Submitting registration...", { firstName, lastName, email });
+    setIsLoading(true);
     try {
       const res = await fetch("http://localhost:4000/api/auth/register", {
         method: "POST",
@@ -41,8 +44,10 @@ const Register = () => {
       });
 
       const data = await res.json();
+      console.log("Response data:", data);
 
       if (!res.ok) {
+        console.error("Registration response not OK", res.status);
         // If response is not OK, it means there are validation errors
         if (data.errors) {
           setEmailError(data.errors.email);
@@ -51,17 +56,45 @@ const Register = () => {
           setPasswordError(data.errors.password);
           setRepeatPasswordError(data.errors.repeatPassword);
         }
-        throw new Error("Registration failed"); // This should be inside the if block
+        // If there's a general warning/error but specific fields aren't set
+        if (data.warning) {
+          console.warn(data.warning);
+          alert(data.warning); // Show the warning (about email failure) to the user
+          // Proceed to verification anyway if user object exists
+          if (data.user) {
+            navigate(`/verify-email?userId=${data.user}`);
+            return;
+          }
+        }
+        let errorMessage = data.message || data.error || "Registration failed";
+
+        // If we have field-specific errors, we don't necessarily need to throw a general error TO THE USER via alert,
+        // unless we want to. But for now, let's include them in the thrown error message for debugging if needed,
+        // or just throw the main message.
+        if (data.errors) {
+          // If we have errors object, the UI is already updated via setStates above.
+          // We can just return here to stop execution without throwing a disruptive alert, 
+          // OR we can throw a silent error.
+          return;
+        }
+
+        throw new Error(errorMessage);
       }
 
       // If registration is successful
       console.log("Registration successful:", data);
-      // You can redirect the user or show a success message here
-      // On successful registration, redirect to the email verification page.
-      const userId = data.user;
+
+      if (data.warning) {
+        alert(data.warning);
+      }
+
+      const userId = data.user || (data.user && data.user._id); // Handle potential structure differences
       navigate(`/verify-email?userId=${userId}`);
     } catch (err) {
-      console.error(err.message);
+      console.error("Registration error:", err);
+      setEmailError(err.message || "Registration failed. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -115,7 +148,9 @@ const Register = () => {
         />
         <div className="error">{repeatPasswordError}</div>
 
-        <button type="submit">Sign up</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "Creating Account..." : "Sign up"}
+        </button>
 
         <Link className="forgotPassword" to="/">
           Have an Account? Log in Here

@@ -34,6 +34,7 @@ const VerifyEmail = () => {
         method: "POST",
         body: JSON.stringify({ userId, otp }),
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
       });
 
       const data = await res.json();

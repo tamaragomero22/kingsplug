@@ -10,7 +10,14 @@ const handleErrors = (err) => {
 
   // Duplicate email error
   if (err.code === 11000) {
-    errors.email = "That email is already registered";
+    const field = err.keyPattern
+      ? Object.keys(err.keyPattern)[0]
+      : "field";
+    errors[field] = `That ${field} is already registered`;
+    // Fallback if the field isn't one of our expected error keys
+    if (!errors.file && field === "email") {
+      errors.email = "That email is already registered";
+    }
     return errors;
   }
 
@@ -78,11 +85,13 @@ This code will expire in 10 minutes.\n\nThanks,\nThe Kingsplug Team`,
       res.status(201).json({ user: user._id });
     } catch (emailError) {
       console.error(`Failed to send welcome email:`, emailError);
-      // If email fails, we might not want to complete the registration
-      // or at least let the user know. For now, we'll send an error.
-      res
-        .status(500)
-        .json({ errors: { email: "Could not send welcome email." } });
+      // Allow registration to succeed even if email fails
+      // User can request OTP resend later
+      console.warn(`User ${user.email} registered but email not sent. OTP: ${user.verifyOtp}`);
+      res.status(201).json({
+        user: user._id,
+        warning: "Registration successful but verification email could not be sent. Please contact support if needed."
+      });
     }
   } catch (err) {
     const errors = handleErrors(err);
@@ -103,12 +112,18 @@ const loginPost = async (req, res) => {
     }
 
     const token = createToken(user._id);
-    res.cookie("jwt", token, {
+    const cookieOptions = {
       httpOnly: true,
       maxAge: maxAge * 1000,
       sameSite: "None",
-      secure: true,
-    });
+      secure: true, // secure: true works on localhost in modern browsers
+    };
+    // if (process.env.NODE_ENV === "production") {
+    //   cookieOptions.sameSite = "None";
+    //   cookieOptions.secure = true;
+    // }
+    console.log("Logging in. Setting cookie with options:", cookieOptions);
+    res.cookie("jwt", token, cookieOptions);
     res.status(200).json({ user: user._id });
   } catch (err) {
     const errors = handleErrors(err);
@@ -119,12 +134,19 @@ const loginPost = async (req, res) => {
 const logoutGet = (req, res) => {
   // To log a user out, we replace the JWT cookie with a blank one that expires immediately.
   // The cookie options should match the ones used when setting it.
-  res.cookie("jwt", "", {
+  const cookieOptions = {
     httpOnly: true,
     maxAge: 1,
     sameSite: "None",
     secure: true,
-  });
+  };
+  // if (process.env.NODE_ENV === "production") {
+  //   cookieOptions.sameSite = "None";
+  //   cookieOptions.secure = true;
+  // }
+  // Remove sameSite restrictions for easier localhost dev if not production
+  console.log("Clearing cookie with options:", cookieOptions);
+  res.cookie("jwt", "", cookieOptions);
   // It's good practice to send a confirmation or redirect.
   res.status(200).json({ message: "User logged out" });
 };
@@ -202,12 +224,21 @@ const verifyEmail = async (req, res) => {
 
     // Automatically log the user in by creating a JWT
     const token = createToken(user._id);
-    res.cookie("jwt", token, {
+    const cookieOptions = {
       httpOnly: true,
       maxAge: maxAge * 1000,
       sameSite: "None",
       secure: true,
-    });
+    };
+    // if (process.env.NODE_ENV === "production") {
+    //   cookieOptions.sameSite = "None";
+    //   cookieOptions.secure = true;
+    // }
+
+    console.log("Verifying email. Setting cookie with options:", cookieOptions);
+    console.log("Origin:", req.headers.origin);
+
+    res.cookie("jwt", token, cookieOptions);
     // Return user info so the frontend knows the user is authenticated
     return res.status(200).json({
       success: true,
