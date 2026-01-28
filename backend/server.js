@@ -18,14 +18,26 @@ const corsOptions = {
   origin: (origin, callback) => {
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
+
     // Allow any localhost origin
     if (origin.startsWith("http://localhost") || origin.startsWith("http://127.0.0.1")) {
       return callback(null, true);
     }
+
+    // Allow your production domains
+    if (origin === 'https://kingsplug.com' ||
+      origin === 'https://www.kingsplug.com' ||
+      origin === 'http://kingsplug.com' ||
+      origin === 'http://www.kingsplug.com') {
+      return callback(null, true);
+    }
+
     return callback(new Error("Not allowed by CORS"));
   },
   credentials: true,
 };
+
+
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
