@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ['nodejs_22']
+nixPkgs = ['nodejs_22', 'python3']
 
 [phases.install]
 cmds = ['npm install']
@@ -8,4 +8,4 @@ cmds = ['npm install']
 cmds = ['npm run build']
 
 [start]
-cmd = 'npx serve dist -p 3000 -s'
+cmd = 'cd dist && python3 -m http.server 3000'
