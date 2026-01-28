@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './LoginForm.css';
+const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000';
 
 const LoginForm = () => {
     const navigate = useNavigate();
@@ -17,7 +18,7 @@ const LoginForm = () => {
         setPasswordError('');
 
         try {
-            const res = await fetch('http://localhost:4000/api/auth/login', {
+            const res = await fetch(`${API_URL}/api/auth/login`, {
                 method: 'POST',
                 body: JSON.stringify({ email, password }),
                 headers: { 'Content-Type': 'application/json' },
@@ -57,7 +58,7 @@ const LoginForm = () => {
                 <button type="submit" className="btnLogin">Log In</button>
                 <Link className="forgotPassword" to="/forgot-password">Forgotten Password?</Link>
                 <hr />
-                <Link className="createAccount" to="/register">Don't Have an Account?</Link>   
+                <Link className="createAccount" to="/register">Don't Have an Account?</Link>
             </form>
         </div>
     );

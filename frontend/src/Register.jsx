@@ -4,6 +4,8 @@ import "./Register.css";
 import { Nav } from "./Nav";
 import { Footer } from "./Footer";
 
+const API_URL = import.meta.env.VITE_BASE_API_URL || 'http://localhost:4000';
+
 const Register = () => {
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
@@ -36,7 +38,7 @@ const Register = () => {
     console.log("Submitting registration...", { firstName, lastName, email });
     setIsLoading(true);
     try {
-      const res = await fetch("http://localhost:4000/api/auth/register", {
+      const res = await fetch(`${API_URL}/api/auth/register`, {
         method: "POST",
         body: JSON.stringify({ firstName, lastName, email, password }),
         headers: { "Content-Type": "application/json" },
