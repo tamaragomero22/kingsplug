@@ -4,7 +4,7 @@ import "./Register.css";
 import { Nav } from "./Nav";
 import { Footer } from "./Footer";
 
-const API_URL = import.meta.env.VITE_BASE_API_URL || 'http://localhost:4000';
+const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000';
 
 const Register = () => {
   const navigate = useNavigate();
