@@ -7,7 +7,8 @@ body {
 
 .registerForm {
   max-width: 400px;
-  margin: 8rem auto 30px; /* Set top, sides, and bottom margin correctly */
+  margin: 8rem auto 30px;
+  /* Set top, sides, and bottom margin correctly */
   padding: 2rem;
   background-color: #1a1a2e;
   border-radius: 10px;
@@ -17,7 +18,8 @@ body {
 .error {
   color: #c07f08;
   font-size: 0.9em;
-  height: 1.2em; /* Reserves space to prevent layout shift when errors appear */
+  height: 1.2em;
+  /* Reserves space to prevent layout shift when errors appear */
   margin-top: 2px;
 }
 
@@ -25,4 +27,13 @@ hr {
   border: none;
   height: 1px;
   background-color: #444;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .registerForm {
+    margin: 5rem auto 30px;
+    padding: 1.5rem;
+    max-width: 90%;
+  }
 }

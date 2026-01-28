@@ -1,4 +1,4 @@
-.loginFormContainer { 
+.loginFormContainer {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -10,7 +10,7 @@
   border-radius: 10px;
   width: 100%;
   max-width: 400px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .btnLogin:hover {
@@ -18,7 +18,8 @@
   filter: brightness(1.1);
 }
 
-.forgotPassword, .createAccount {
+.forgotPassword,
+.createAccount {
   font-size: 0.8rem;
   text-align: center;
   color: #9aa1a0;
@@ -38,4 +39,16 @@ hr {
   background-color: #444;
   width: 80%;
   margin: 1rem auto;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .loginFormContainer {
+    padding: 0 1rem;
+  }
+
+  .loginForm {
+    padding: 1.5rem;
+    max-width: 100%;
+  }
 }

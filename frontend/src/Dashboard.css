@@ -3,7 +3,8 @@
   margin: 8rem auto 3rem;
   padding: 2rem;
   background-color: white;
-  color: #1a1a2e; /* Dark text for light background */
+  color: #1a1a2e;
+  /* Dark text for light background */
   border-radius: 10px;
   box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
 }
@@ -15,7 +16,8 @@
 .dashboard-header h2 {
   font-size: 2rem;
   font-weight: 600;
-  color: #1a1a2e; /* Dark text for light background */
+  color: #1a1a2e;
+  /* Dark text for light background */
 }
 
 .dashboard-content {
@@ -54,7 +56,8 @@
 .cta-button {
   display: inline-block;
   margin-top: 2rem;
-  padding: 1rem 0; /* Adjust padding for fixed width */
+  padding: 1rem 0;
+  /* Adjust padding for fixed width */
   width: 200px;
   text-align: center;
   font-size: 1.1rem;
@@ -84,4 +87,43 @@
   margin-top: 1rem;
   color: #9580ff;
   text-decoration: none;
+}
+
+/* Tablet Responsive */
+@media (max-width: 1024px) {
+  .dashboard-container {
+    max-width: 90%;
+    padding: 1.5rem;
+  }
+
+  .dashboard-content {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .dashboard-container {
+    margin: 5rem auto 2rem;
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+
+  .dashboard-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .dashboard-content {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .feature-card {
+    padding: 1.25rem;
+  }
+
+  .cta-button {
+    width: 100%;
+    max-width: 300px;
+  }
 }

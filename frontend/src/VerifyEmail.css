@@ -7,9 +7,19 @@ body {
 
 .verifyEmailForm {
   max-width: 400px;
-  margin: 8rem auto 30px; /* Set top, sides, and bottom margin correctly */
+  margin: 8rem auto 30px;
+  /* Set top, sides, and bottom margin correctly */
   padding: 2rem;
   background-color: #1a1a2e;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .verifyEmailForm {
+    margin: 5rem auto 30px;
+    padding: 1.5rem;
+    max-width: 90%;
+  }
 }

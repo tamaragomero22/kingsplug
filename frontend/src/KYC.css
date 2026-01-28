@@ -40,6 +40,7 @@
   background-color: #2a2a4a;
   color: #d1cccc;
   font-size: 1rem;
+  box-sizing: border-box;
 }
 
 .form-group input:focus,
@@ -67,7 +68,28 @@
   background-color: #2a4a3a;
   color: #80ffea;
 }
+
 .error-message {
   background-color: #4a2a2a;
   color: #ff79c6;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .kyc-container {
+    margin: 5rem auto 2rem;
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+
+  .kyc-form h2 {
+    font-size: 1.5rem;
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: 0.9rem 1rem;
+    font-size: 16px;
+    /* Prevents zoom on iOS */
+  }
 }
