@@ -6,7 +6,9 @@ header {
   background-color: hsl(215, 33%, 7%);
   border-bottom: 1px solid hsl(215, 33%, 18%);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 1000; /* Ensure nav is on top of other content */
+  z-index: 1000;
+  overflow: visible;
+  /* Ensure nav is on top of other content */
 }
 
 #headerContainer {
@@ -17,6 +19,7 @@ header {
   justify-content: space-between;
   align-items: center;
   height: 40px;
+  overflow: visible;
 }
 
 .logo {
@@ -33,6 +36,8 @@ header {
   border: none;
   cursor: pointer;
   padding: 0;
+  position: relative;
+  /* Ensure z-index works */
   z-index: 1001;
   width: 30px;
   height: 24px;
@@ -46,6 +51,7 @@ header {
   background-color: #80ffea;
   border-radius: 2px;
   transition: all 0.3s ease;
+  transform-origin: center;
 }
 
 .hamburger-menu span.open:nth-child(1) {
@@ -83,21 +89,26 @@ nav a {
   font-size: 1rem;
   text-align: center;
   padding: 0.3rem 1rem;
-  border: 1px solid transparent; /* Add transparent border */
+  border: 1px solid transparent;
+  /* Add transparent border */
   border-radius: 6px;
-  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out; /* Add border-color to transition */
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  /* Add border-color to transition */
 }
 
 nav a img {
-  margin-right: 8px; /* Adjust as needed for spacing between icon and text */
-  height: 17px; /* Or your desired icon height */
+  margin-right: 8px;
+  /* Adjust as needed for spacing between icon and text */
+  height: 17px;
+  /* Or your desired icon height */
   text-align: center;
   align-items: center;
 }
 
 nav a:hover {
   background-color: hsl(215, 33%, 10%);
-  border-color: #4a5568; /* Change border color on hover */
+  border-color: #4a5568;
+  /* Change border color on hover */
 }
 
 nav a.active {
@@ -109,13 +120,15 @@ nav a.active {
   color: #d1cccc;
   font-size: 0.9rem;
   padding: 0.5rem 1rem;
-  cursor: default; /* Not a link */
+  cursor: default;
+  /* Not a link */
 }
 
 .nav-logout-btn {
   background-color: transparent;
   color: #80ffea;
-  font-family: inherit; /* Use the site's font */
+  font-family: inherit;
+  /* Use the site's font */
   font-size: 1.1rem;
   padding: 0.5rem 1rem;
   border: 1px solid transparent;
@@ -148,8 +161,10 @@ nav a.active {
 /* Mobile Responsive */
 @media (max-width: 768px) {
   #headerContainer {
-    padding: 0.4rem 1rem;
+    padding: 0.4rem 1.5rem;
+    /* Increase side padding */
     height: 60px;
+    overflow: visible;
   }
 
   .logo {
@@ -158,6 +173,13 @@ nav a.active {
 
   .hamburger-menu {
     display: flex;
+    position: relative;
+    z-index: 10000;
+    /* Ensure button is on top of everything */
+    overflow: visible;
+    /* Ensure spans aren't clipped */
+    margin-right: 2px;
+    /* Slight offset from edge */
   }
 
   nav {
@@ -172,6 +194,8 @@ nav a.active {
     transition: right 0.3s ease-in-out;
     padding-top: 80px;
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 1999;
+    /* Below button but above header content */
   }
 
   nav.mobile-menu-open {
