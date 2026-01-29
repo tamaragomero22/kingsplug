@@ -14,7 +14,7 @@ export default function SendBitcoin() {
     setError("");
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/bitcoin/address`
+        `${import.meta.env.VITE_API_BASE_URL}/api/bitcoin/address`
       );
       setAddress(res.data.address);
       setShow(true);
