@@ -1,4 +1,4 @@
-import getTransporter from "../config/nodemailer.js";
+import resend from "../config/nodemailer.js";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 
@@ -71,15 +71,18 @@ const registerPost = async (req, res) => {
 
       await user.save(); // Save the OTP and expiry to the database
 
-      const mailOptions = {
+      const { error: welcomeError } = await resend.emails.send({
         from: process.env.SENDER_EMAIL,
         to: user.email,
         subject: "Verify Your Account on Kingsplug Exchange",
         text: `Hi ${user.firstName},\n\nWelcome to Kingsplug Exchange!
 Your verification OTP is: ${otp}
 This code will expire in 10 minutes.\n\nThanks,\nThe Kingsplug Team`,
-      };
-      await getTransporter().sendMail(mailOptions);
+      });
+
+      if (welcomeError) {
+        throw new Error(`Resend Welcome Email Error: ${welcomeError.message}`);
+      }
       console.log(`Welcome email sent to ${user.email}`);
 
       res.status(201).json({ user: user._id });
@@ -175,14 +178,16 @@ const sendVerifyOtp = async (req, res) => {
 
     await user.save();
 
-    const mailOptions = {
+    const { error: otpError } = await resend.emails.send({
       from: process.env.SENDER_EMAIL,
       to: user.email,
       subject: "Account Verification OTP",
       text: `Your new verification OTP is: ${otp}. This code will expire in 10 minutes.`,
-    };
+    });
 
-    await getTransporter().sendMail(mailOptions);
+    if (otpError) {
+      throw new Error(`Resend OTP Email Error: ${otpError.message}`);
+    }
 
     return res.json({
       success: true,
