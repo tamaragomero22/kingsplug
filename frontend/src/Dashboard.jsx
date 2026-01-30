@@ -5,6 +5,8 @@ import "./Dashboard.css"; // Import the new dashboard styles
 import SendBitcoin from "./SendBitcoin";
 import { Footer } from "./Footer";
 
+const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000';
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -16,7 +18,7 @@ const Dashboard = () => {
   const fetchDashboardData = async () => {
     try {
       // The browser will automatically send the 'jwt' cookie with cross-origin requests
-      const response = await fetch("http://localhost:4000/api/dashboard/data", {
+      const response = await fetch(`${API_URL}/api/dashboard/data`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
         credentials: "include", // This is crucial for sending cookies to a different domain
@@ -78,7 +80,7 @@ const Dashboard = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch("http://localhost:4000/api/auth/logout", {
+      await fetch(`${API_URL}/api/auth/logout`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

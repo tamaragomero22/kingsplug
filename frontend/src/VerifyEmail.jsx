@@ -4,6 +4,8 @@ import { Nav } from "./Nav";
 import { Footer } from "./Footer";
 import "./VerifyEmail.css";
 
+const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000';
+
 const VerifyEmail = () => {
   const [otp, setOtp] = useState("");
   const [message, setMessage] = useState("");
@@ -30,7 +32,7 @@ const VerifyEmail = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:4000/api/auth/verify-email", {
+      const res = await fetch(`${API_URL}/api/auth/verify-email`, {
         method: "POST",
         body: JSON.stringify({ userId, otp }),
         headers: { "Content-Type": "application/json" },

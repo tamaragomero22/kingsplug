@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Footer } from "./Footer";
 import "./KYC.css";
 
+const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000';
+
 const KYC = () => {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -24,7 +26,7 @@ const KYC = () => {
     const fetchUserData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:4000/api/dashboard/data",
+          `${API_URL}/api/dashboard/data`,
           {
             method: "GET",
             headers: { "Content-Type": "application/json" },
@@ -83,7 +85,7 @@ const KYC = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:4000/api/user/kyc", {
+      const response = await fetch(`${API_URL}/api/user/kyc`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
