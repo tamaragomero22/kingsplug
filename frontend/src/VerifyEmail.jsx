@@ -18,6 +18,8 @@ const VerifyEmail = () => {
 
   const userId = searchParams.get("userId");
 
+  const email = searchParams.get("email");
+
   useEffect(() => {
     if (!userId) {
       setError("User not found. Please try registering again.");
@@ -82,7 +84,7 @@ const VerifyEmail = () => {
             marginBottom: "1.5rem",
           }}
         >
-          An OTP has been sent to your email address. Please enter it below.
+          An OTP has been sent to {email ? <span style={{ color: "#fff", fontWeight: "bold" }}>{email}</span> : "your email address"}. Please enter it below.
         </p>
 
         <input

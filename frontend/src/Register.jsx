@@ -94,7 +94,7 @@ const Register = () => {
       }
 
       const userId = data.user || (data.user && data.user._id); // Handle potential structure differences
-      navigate(`/verify-email?userId=${userId}`);
+      navigate(`/verify-email?userId=${userId}&email=${encodeURIComponent(email)}`);
     } catch (err) {
       console.error("Registration error:", err);
       setEmailError(err.message || "Registration failed. Please try again.");
