@@ -44,9 +44,9 @@ app.use(cookieParser());
 
 // Debug logging middleware
 app.use((req, res, next) => {
-  console.log(`Incoming request: ${req.method} ${req.url}`);
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
   console.log("Origin:", req.headers.origin);
-  console.log("Cookies:", req.cookies);
+  console.log("Host:", req.headers.host);
   next();
 });
 
@@ -55,6 +55,12 @@ app.use("/api/dashboard", requireAuth, dashboardRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/user", requireAuth, userRoutes);
 app.use("/api/bitcoin", bitcoinRoutes);
+
+// Catch-all for undefined routes
+app.use((req, res) => {
+  console.log(`[404] No route found for: ${req.method} ${req.url}`);
+  res.status(404).json({ error: "Route not found" });
+});
 
 // Start the server
 const startServer = async () => {

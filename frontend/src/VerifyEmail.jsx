@@ -32,6 +32,7 @@ const VerifyEmail = () => {
     }
 
     try {
+      console.log(`Attempting to verify OTP at: ${API_URL}/api/auth/verify-email`);
       const res = await fetch(`${API_URL}/api/auth/verify-email`, {
         method: "POST",
         body: JSON.stringify({ userId, otp }),

@@ -6,6 +6,7 @@ import {
   loginPost,
   logoutGet,
   verifyEmail,
+  sendVerifyOtp,
 } from "../controllers/authController.js";
 
 const router = Router();
@@ -17,6 +18,7 @@ router.get("/login", loginGet);
 router.post("/login", loginPost);
 
 router.post("/verify-email", verifyEmail);
+router.post("/send-verify-otp", sendVerifyOtp);
 
 router.get("/logout", logoutGet);
 
