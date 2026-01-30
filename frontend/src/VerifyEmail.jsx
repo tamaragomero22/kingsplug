@@ -4,7 +4,7 @@ import { Nav } from "./Nav";
 import { Footer } from "./Footer";
 import "./VerifyEmail.css";
 
-const API_URL = import.meta.env.VITE_API_BASE_URL || 'https://api.kingsplug.com'
+const API_URL = import.meta.env.VITE_API_BASE_URL || 'https://api.kingsplug.com';
 
 const VerifyEmail = () => {
   const [otp, setOtp] = useState("");
@@ -52,8 +52,6 @@ const VerifyEmail = () => {
         "Email verified successfully! Redirecting to your dashboard..."
       );
       setTimeout(() => {
-        // Pass user data to the dashboard to avoid a race condition on data fetching.
-        // The dashboard can use this data immediately without having to fetch it.
         const user = {
           email: data.user.email,
           firstName: data.user.firstName,
