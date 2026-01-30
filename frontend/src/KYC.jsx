@@ -4,7 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { Footer } from "./Footer";
 import "./KYC.css";
 
-const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000';
+const API_URL = import.meta.env.VITE_API_BASE_URL ||
+  (window.location.hostname === 'kingsplug.com' || window.location.hostname === 'www.kingsplug.com'
+    ? 'https://api.kingsplug.com'
+    : 'http://localhost:4000');
 
 const KYC = () => {
   const [formData, setFormData] = useState({

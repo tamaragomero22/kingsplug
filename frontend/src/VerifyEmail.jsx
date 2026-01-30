@@ -4,7 +4,10 @@ import { Nav } from "./Nav";
 import { Footer } from "./Footer";
 import "./VerifyEmail.css";
 
-const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000';
+const API_URL = import.meta.env.VITE_API_BASE_URL ||
+  (window.location.hostname === 'kingsplug.com' || window.location.hostname === 'www.kingsplug.com'
+    ? 'https://api.kingsplug.com'
+    : 'http://localhost:4000');
 
 const VerifyEmail = () => {
   const [otp, setOtp] = useState("");
@@ -63,7 +66,8 @@ const VerifyEmail = () => {
         navigate("/dashboard", { state: { user } });
       }, 3000);
     } catch (err) {
-      setError(err.message);
+      console.error("Verification error detail:", err);
+      setError(`Connection Error: ${err.message}. (Target: ${API_URL})`);
     }
   };
 

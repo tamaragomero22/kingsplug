@@ -5,7 +5,10 @@ import "./Dashboard.css"; // Import the new dashboard styles
 import SendBitcoin from "./SendBitcoin";
 import { Footer } from "./Footer";
 
-const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000';
+const API_URL = import.meta.env.VITE_API_BASE_URL ||
+  (window.location.hostname === 'kingsplug.com' || window.location.hostname === 'www.kingsplug.com'
+    ? 'https://api.kingsplug.com'
+    : 'http://localhost:4000');
 
 const Dashboard = () => {
   const navigate = useNavigate();
