@@ -1,6 +1,8 @@
 import resend from "../config/nodemailer.js";
 import User from "../models/User.js";
+import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
+import { getWelcomeEmailHtml, getOtpEmailHtml } from "../utils/emailTemplates.js";
 
 // Handle errors
 const handleErrors = (err) => {
@@ -60,7 +62,10 @@ const registerPost = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
   try {
+    console.log("Attempting to create user in DB:", mongoose.connection.name);
+    console.log("Connection state:", mongoose.connection.readyState);
     const user = await User.create({ firstName, lastName, email, password });
+    console.log("User created with ID:", user._id);
 
     // Generate and save OTP, then send welcome/verification email
     try {
@@ -75,9 +80,7 @@ const registerPost = async (req, res) => {
         from: process.env.SENDER_EMAIL,
         to: user.email,
         subject: "Verify Your Account on Kingsplug Exchange",
-        text: `Hi ${user.firstName},\n\nWelcome to Kingsplug Exchange!
-Your verification OTP is: ${otp}
-This code will expire in 10 minutes.\n\nThanks,\nThe Kingsplug Team`,
+        html: getWelcomeEmailHtml(user.firstName, otp),
       });
 
       if (welcomeError) {
@@ -182,7 +185,7 @@ const sendVerifyOtp = async (req, res) => {
       from: process.env.SENDER_EMAIL,
       to: user.email,
       subject: "Account Verification OTP",
-      text: `Your new verification OTP is: ${otp}. This code will expire in 10 minutes.`,
+      html: getOtpEmailHtml(otp),
     });
 
     if (otpError) {
