@@ -23,9 +23,10 @@ header {
 }
 
 .logo {
-  margin-top: 20px;
-  max-width: 150px;
+  margin-top: 10px;
+  max-width: 180px;
   height: auto;
+  display: block;
 }
 
 /* Hamburger Menu */
