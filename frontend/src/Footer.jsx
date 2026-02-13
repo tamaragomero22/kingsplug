@@ -4,7 +4,7 @@ export const Footer = () => {
     return (
         <footer>
             <div className="container footer-container">
-                <p>&copy; 2025 Kingsplug Nigeria Limited. All rights reserved.</p>
+                <p>2025 10 KINGS GROUP. All rights reserved.</p>
                 <div className="footer-links">
                     <a href="/privacy">Privacy Policy</a>
                     <a href="/terms">Terms of Service</a>
