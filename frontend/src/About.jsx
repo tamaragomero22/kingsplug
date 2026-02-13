@@ -27,19 +27,23 @@ const About = () => {
                             </p>
                         </div>
 
-                        <div className="about-grid">
-                            <div className="about-card mission-card">
-                                <h2>Our Mission</h2>
-                                <p>
-                                    Our mission is to make digital finance accessible to everyone. Inspired by the innovation behind Bitcoin, we believe in empowering individuals with financial freedom through secure, transparent, and decentralized technology.
-                                </p>
-                            </div>
+                        <div className="about-highlight-card">
+                            <div className="highlight-content">
+                                <section className="highlight-section">
+                                    <h3>Who We Are</h3>
+                                    <p>
+                                        Founded by a team of young minds, blockchain developers, cybersecurity experts, and financial professionals, Kingsplug.com was created to bridge the gap between traditional finance and the digital economy. We are a dedicated team committed to providing a reliable and secure platform for all your digital asset needs.
+                                    </p>
+                                </section>
 
-                            <div className="about-card who-we-are-card">
-                                <h2>Who We Are</h2>
-                                <p>
-                                    Founded by a team of young minds with blockchain developers, cybersecurity experts, and financial professionals, Kingsplug.com was created to bridge the gap between traditional finance and the digital economy. We combine cutting-edge technology with a user-friendly experience to ensure that exchanging cryptocurrencies to Naira is seamless and secure.
-                                </p>
+                                <div className="highlight-divider"></div>
+
+                                <section className="highlight-section">
+                                    <h3>Our Mission</h3>
+                                    <p>
+                                        Our mission is to make digital finance accessible to everyone. Inspired by the innovation behind Bitcoin, we believe in empowering individuals with financial freedom through secure, transparent, and decentralized technology. We combine cutting-edge technology with a user-friendly experience to ensure that exchanging cryptocurrencies to Naira is seamless and secure.
+                                    </p>
+                                </section>
                             </div>
                         </div>
 
@@ -101,6 +105,91 @@ const About = () => {
                                 </p>
                             </div>
                         </div>
+
+                        <section className="team-section">
+                            <h2>Our Team</h2>
+                            <div className="team-grid">
+                                {/* The Visionary - Prominent Card */}
+                                <div className="team-card">
+                                    <div className="team-image-wrap">
+                                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=1000" alt="Kingsplug Founder" />
+                                    </div>
+                                    <div className="team-info">
+                                        <h3>Joshua Kings</h3>
+                                        <span className="team-role">Founder & CEO</span>
+                                        <p className="team-bio">
+                                            As the visionary founder and CEO of Kingsplug, Joshua brings his tenacious entrepreneurial spirit to drive the company's mission of pioneering innovation in the digital world. His unwavering commitment to excellence leads the team towards a brighter, more connected future for digital finance.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Management Team */}
+                                <div className="team-card">
+                                    <div className="team-image-wrap">
+                                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=1000" alt="Executive" />
+                                    </div>
+                                    <div className="team-info">
+                                        <h3>Emma Richardson</h3>
+                                        <span className="team-role">Chief Strategy Officer</span>
+                                        <p className="team-bio">
+                                            Emma plays a pivotal role in translating big ideas into actionable strategies. With a keen eye for market trends, she ensures that Kingsplug app exceeds customer expectations and stays ahead of the curve.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="team-card">
+                                    <div className="team-image-wrap">
+                                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=1000" alt="Product Designer" />
+                                    </div>
+                                    <div className="team-info">
+                                        <h3>David Adeleke</h3>
+                                        <span className="team-role">Head of Product Design</span>
+                                        <p className="team-bio">
+                                            David is the creative force behind Kingsplug's product and brand designs. He crafts compelling experiences that resonate with our users, ensuring the platform remains intuitive and visually appealing.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="team-card">
+                                    <div className="team-image-wrap">
+                                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=1000" alt="Customer Success" />
+                                    </div>
+                                    <div className="team-info">
+                                        <h3>Sarah Johnson</h3>
+                                        <span className="team-role">Head of Customer Success</span>
+                                        <p className="team-bio">
+                                            Sarah leads our support team with dedication. She is committed to providing exceptional assistance, ensuring that all inquiries are addressed promptly and with empathy for every user.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="team-card">
+                                    <div className="team-image-wrap">
+                                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=1000" alt="CTO" />
+                                    </div>
+                                    <div className="team-info">
+                                        <h3>Michael Chen</h3>
+                                        <span className="team-role">Chief Technology Officer</span>
+                                        <p className="team-bio">
+                                            Michael is the driving force behind Kingsplug's marketing and technical growth. His expertise in the crypto landscape allows him to showcase our unique offerings to the right audience.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="team-card">
+                                    <div className="team-image-wrap">
+                                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=1000" alt="HR" />
+                                    </div>
+                                    <div className="team-info">
+                                        <h3>Princess Okafor</h3>
+                                        <span className="team-role">HR & Operations Manager</span>
+                                        <p className="team-bio">
+                                            Princess ensures that our team is nurtured and motivated. She is committed to building a positive work culture, fostering a collaborative environment where every member thrives.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
 
                         <div className="about-card vision-card">
                             <h2>Our Vision</h2>
