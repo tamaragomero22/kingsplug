@@ -6,6 +6,7 @@ import Dashboard from "./Dashboard.jsx";
 import ForgotPassword from "./ForgotPassword.jsx";
 import VerifyEmail from "./VerifyEmail.jsx";
 import KYC from "./KYC.jsx";
+import About from "./About.jsx";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/kyc" element={<KYC />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </div>
   );

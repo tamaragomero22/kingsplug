@@ -68,9 +68,9 @@ export const Nav = ({
                   </NavLink>
                 </li>
                 <li>
-                  <HashLink smooth to="/#features" onClick={closeMobileMenu}>
+                  <NavLink to="/about" onClick={closeMobileMenu}>
                     About
-                  </HashLink>
+                  </NavLink>
                 </li>
                 {!hideSignUp && (
                   <li>
