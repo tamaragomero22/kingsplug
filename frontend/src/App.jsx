@@ -7,10 +7,12 @@ import ForgotPassword from "./ForgotPassword.jsx";
 import VerifyEmail from "./VerifyEmail.jsx";
 import KYC from "./KYC.jsx";
 import About from "./About.jsx";
+import ScrollToTop from "./ScrollToTop.jsx";
 
 function App() {
   return (
     <div className="App">
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />

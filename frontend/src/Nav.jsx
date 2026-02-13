@@ -62,7 +62,7 @@ export const Nav = ({
             ) : (
               <>
                 <li>
-                  <NavLink to="/" onClick={closeMobileMenu}>
+                  <NavLink to="/" onClick={() => { window.scrollTo(0, 0); closeMobileMenu(); }}>
                     <img src={homeIcon} alt="Home" />
                     Home
                   </NavLink>
