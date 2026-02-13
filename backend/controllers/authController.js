@@ -76,17 +76,18 @@ const registerPost = async (req, res) => {
 
       await user.save(); // Save the OTP and expiry to the database
 
-      const { error: welcomeError } = await resend.emails.send({
+      const resendResponse = await resend.emails.send({
         from: process.env.SENDER_EMAIL,
         to: user.email,
         subject: "Verify Your Account on Kingsplug Exchange",
         html: getWelcomeEmailHtml(user.firstName, otp),
       });
 
-      if (welcomeError) {
-        throw new Error(`Resend Welcome Email Error: ${welcomeError.message}`);
+      if (resendResponse.error) {
+        console.error("Resend API Error:", resendResponse.error);
+        throw new Error(`Resend Welcome Email Error: ${resendResponse.error.message}`);
       }
-      console.log(`Welcome email sent to ${user.email}`);
+      console.log(`Welcome email sent successfully. ID: ${resendResponse.data.id}`);
 
       res.status(201).json({ user: user._id });
     } catch (emailError) {

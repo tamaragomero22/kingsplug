@@ -17,6 +17,29 @@ body {
   color: #fff;
 }
 
+.main-page-grid-wrap {
+  position: relative;
+  width: 100%;
+}
+
+/* Extended Grid Background Pattern */
+.full-grid-bg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+}
+
 .home-content {
   display: flex;
   align-items: center;

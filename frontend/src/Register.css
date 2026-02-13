@@ -18,9 +18,45 @@ body {
 .error {
   color: #c07f08;
   font-size: 0.9em;
-  height: 1.2em;
+  min-height: 1.2em;
   /* Reserves space to prevent layout shift when errors appear */
   margin-top: 2px;
+  word-wrap: break-word;
+  overflow: visible;
+}
+
+.password-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-input-wrapper input {
+  padding-right: 40px;
+  /* Space for the eye icon */
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  width: auto;
+  min-height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s;
+}
+
+.password-toggle:hover {
+  color: hsl(189, 98%, 50%);
+  background: none;
 }
 
 hr {

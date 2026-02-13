@@ -23,6 +23,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please provide a password"],
       minlength: [6, "Password must be at least 6 characters long"],
+      validate: {
+        validator: function (v) {
+          return /\d/.test(v) && /[!@#$%^&*(),.?":{}|<>]/.test(v);
+        },
+        message: "Password must contain at least one number and one symbol",
+      },
     },
     verifyOtp: {
       type: String,
