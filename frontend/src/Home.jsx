@@ -3,6 +3,7 @@ import "./Home.css";
 import LoginForm from "./LoginForm";
 import { Footer } from "./Footer";
 import { Features } from "./Features";
+import WavyDivider from "./WavyDivider";
 
 export const Home = () => {
   return (
@@ -32,6 +33,7 @@ export const Home = () => {
           <LoginForm />
         </div>
       </div>
+      <WavyDivider />
       <Features />
 
       <Footer />
