@@ -126,7 +126,7 @@ const AddBankAccount = ({ onSave, onCancel }) => {
                 textAlign: "left"
             }}>
                 <h3 style={{ marginBottom: "1.5rem", color: "#1a1a2e", textAlign: "center" }}>
-                    Add Nigerian Bank Account
+                    Add Bank Account
                 </h3>
 
                 {error && <p style={{ color: "red", fontSize: "0.9rem", marginBottom: "1rem" }}>{error}</p>}

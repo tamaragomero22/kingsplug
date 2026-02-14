@@ -33,6 +33,10 @@ export default function SendBitcoin() {
   };
 
   const fetchAddress = async () => {
+    if (!bankAccount) {
+      alert("Please add a bank account first before you can convert bitcoin to cash.");
+      return;
+    }
     setLoading(true);
     setError("");
     try {
@@ -100,7 +104,7 @@ export default function SendBitcoin() {
           onClick={() => setShowBankForm(true)}
           className="bank-btn"
         >
-          Add Nigerian Bank Account
+          Add Bank Account
         </button>
       )}
 
