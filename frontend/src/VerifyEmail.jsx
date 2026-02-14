@@ -13,11 +13,12 @@ const VerifyEmail = () => {
   const [otp, setOtp] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [canResend, setCanResend] = useState(true);
+  const [timer, setTimer] = useState(0);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const userId = searchParams.get("userId");
-
   const email = searchParams.get("email");
 
   useEffect(() => {
@@ -25,6 +26,49 @@ const VerifyEmail = () => {
       setError("User not found. Please try registering again.");
     }
   }, [userId]);
+
+  // Handle countdown timer
+  useEffect(() => {
+    let interval = null;
+    if (timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    } else {
+      setCanResend(true);
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [timer]);
+
+  const handleResendOtp = async () => {
+    if (!canResend) return;
+
+    setError("");
+    setMessage("");
+    setCanResend(false);
+
+    try {
+      const res = await fetch(`${API_URL}/api/auth/send-verify-otp`, {
+        method: "POST",
+        body: JSON.stringify({ email }),
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || "Failed to resend OTP.");
+      }
+
+      setMessage("A new OTP has been sent to your email.");
+      setTimer(120); // Start 120 second cooldown
+    } catch (err) {
+      setError(err.message);
+      setCanResend(true);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,7 +111,7 @@ const VerifyEmail = () => {
       }, 3000);
     } catch (err) {
       console.error("Verification error detail:", err);
-      setError(`Connection Error: ${err.message}. (Target: ${API_URL})`);
+      setError(`Connection Error: ${err.message}`);
     }
   };
 
@@ -115,7 +159,33 @@ const VerifyEmail = () => {
 
         <button type="submit">Verify Account</button>
 
-        <Link className="forgotPassword" style={{ marginTop: "2rem" }} to="/">
+        <div className="resend-container" style={{ textAlign: "center", marginTop: "1.5rem" }}>
+          <p style={{ color: "#888fb1", fontSize: "0.85rem", marginBottom: "1rem" }}>
+            Don't see it? Please check your <strong>spam folder</strong>.
+          </p>
+          <p style={{ color: "#888fb1", fontSize: "0.9rem" }}>
+            Didn't receive the code?{" "}
+            <button
+              type="button"
+              onClick={handleResendOtp}
+              disabled={!canResend}
+              style={{
+                background: "none",
+                border: "none",
+                color: canResend ? "#9580ff" : "#555",
+                textDecoration: canResend ? "underline" : "none",
+                cursor: canResend ? "pointer" : "not-allowed",
+                fontWeight: "bold",
+                padding: "0",
+                fontSize: "0.9rem"
+              }}
+            >
+              {canResend ? "Resend Code" : `Resend in ${timer}s`}
+            </button>
+          </p>
+        </div>
+
+        <Link className="forgotPassword" style={{ marginTop: "1rem" }} to="/">
           Back to Log In
         </Link>
       </form>

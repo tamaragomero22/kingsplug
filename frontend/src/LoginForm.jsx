@@ -12,7 +12,6 @@ const LoginForm = () => {
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -25,7 +24,7 @@ const LoginForm = () => {
                 method: 'POST',
                 body: JSON.stringify({ email, password }),
                 headers: { 'Content-Type': 'application/json' },
-                credentials: 'include' // Essential for sending/receiving cookies cross-origin
+                credentials: 'include'
             });
 
             const data = await res.json();
@@ -35,6 +34,14 @@ const LoginForm = () => {
                 if (data.errors) {
                     setEmailError(data.errors.email);
                     setPasswordError(data.errors.password);
+
+                    // Check if it's an unverified account error
+                    if (data.errors.email === "Your account has not been verified." && data.userId) {
+                        if (window.confirm("Your account has not been verified. Click OK to go to the verification page.")) {
+                            navigate(`/verify-email?userId=${data.userId}&email=${encodeURIComponent(email)}`);
+                            return;
+                        }
+                    }
                 }
                 throw new Error('Login failed');
             }

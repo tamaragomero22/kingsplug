@@ -1,5 +1,5 @@
 export const getWelcomeEmailHtml = (firstName, otp) => {
-    return `
+  return `
 <!DOCTYPE html>
 <html>
 <head>
@@ -123,7 +123,7 @@ export const getWelcomeEmailHtml = (firstName, otp) => {
 };
 
 export const getOtpEmailHtml = (otp) => {
-    return `
+  return `
 <!DOCTYPE html>
 <html>
 <head>

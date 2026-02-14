@@ -114,7 +114,8 @@ const loginPost = async (req, res) => {
 
     if (!user.isAccountVerified) {
       return res.status(401).json({
-        errors: { email: "Please verify your email before logging in." },
+        errors: { email: "Your account has not been verified." },
+        userId: user._id
       });
     }
 
