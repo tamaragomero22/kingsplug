@@ -4,10 +4,14 @@ import {
   loginGet,
   registerPost,
   loginPost,
-  logoutGet,
   verifyEmail,
   sendVerifyOtp,
+  changePassword,
+  logoutGet,
+  forgotPassword,
+  resetPassword,
 } from "../controllers/authController.js";
+import { requireAuth } from "../middleware/authMiddleware.js";
 
 const router = Router();
 
@@ -19,6 +23,10 @@ router.post("/login", loginPost);
 
 router.post("/verify-email", verifyEmail);
 router.post("/send-verify-otp", sendVerifyOtp);
+
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password", resetPassword);
+router.post("/change-password", requireAuth, changePassword);
 
 router.get("/logout", logoutGet);
 

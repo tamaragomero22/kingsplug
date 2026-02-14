@@ -14,19 +14,26 @@ export const Nav = ({
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
+    setIsDropdownOpen(false);
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
   return (
     <header>
       <div id="headerContainer">
         <div>
-          <Link to={logoLinkTo}>
+          <Link to={logoLinkTo} onClick={closeMobileMenu}>
             <img
               src={logo}
               alt="Kingsplug logo"
@@ -52,11 +59,18 @@ export const Nav = ({
                 <li>
                   <NavLink to="/dashboard" onClick={closeMobileMenu}>Wallet</NavLink>
                 </li>
-                <li className="user-email">Hi {firstName}</li>
-                <li>
-                  <button onClick={() => { onLogout(); closeMobileMenu(); }} className="nav-logout-btn">
-                    Logout
+                <li className="user-profile-dropdown">
+                  <button onClick={toggleDropdown} className="dropdown-toggle">
+                    Hi {firstName} <span className={`arrow ${isDropdownOpen ? 'up' : 'down'}`}></span>
                   </button>
+                  {isDropdownOpen && (
+                    <div className="dropdown-menu">
+                      <Link to="/change-password" onClick={closeMobileMenu}>Change Password</Link>
+                      <button onClick={() => { onLogout(); closeMobileMenu(); }} className="dropdown-item">
+                        Logout
+                      </button>
+                    </div>
+                  )}
                 </li>
               </>
             ) : (

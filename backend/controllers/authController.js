@@ -2,7 +2,9 @@ import resend from "../config/nodemailer.js";
 import User from "../models/User.js";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
-import { getWelcomeEmailHtml, getOtpEmailHtml } from "../utils/emailTemplates.js";
+import bcrypt from "bcryptjs";
+import crypto from "crypto";
+import { getWelcomeEmailHtml, getOtpEmailHtml, getResetPasswordEmailHtml } from "../utils/emailTemplates.js";
 
 // Handle errors
 const handleErrors = (err) => {
@@ -266,6 +268,96 @@ const verifyEmail = async (req, res) => {
   }
 };
 
+const changePassword = async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  const userId = req.user._id;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    // Verify current password
+    const auth = await bcrypt.compare(currentPassword, user.password);
+    if (!auth) {
+      return res.status(400).json({ success: false, message: "Incorrect current password" });
+    }
+
+    // Update password (pre-save hook will hash it)
+    user.password = newPassword;
+    await user.save();
+
+    res.status(200).json({ success: true, message: "Password updated successfully" });
+  } catch (err) {
+    console.error("Change password error:", err);
+    const errors = handleErrors(err);
+    // If it's a validation error for password, extract the message
+    const message = errors.password || "Failed to update password";
+    res.status(400).json({ success: false, message });
+  }
+};
+
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(200).json({ success: true, message: "If an account with that email exists, a reset link has been sent." });
+    }
+
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    user.resetOtp = resetToken;
+    user.resetOtpExpiry = Date.now() + 3600000;
+
+    await user.save();
+
+    const resetLink = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/reset-password?token=${resetToken}&email=${email}`;
+
+    const { error } = await resend.emails.send({
+      from: process.env.SENDER_EMAIL,
+      to: user.email,
+      subject: "Reset Your Password - Kingsplug Exchange",
+      html: getResetPasswordEmailHtml(user.firstName, resetLink),
+    });
+
+    if (error) {
+      throw new Error(`Email failed: ${error.message}`);
+    }
+
+    res.status(200).json({ success: true, message: "If an account with that email exists, a reset link has been sent." });
+  } catch (err) {
+    console.error("Forgot password error:", err);
+    res.status(500).json({ success: false, message: "Failed to send reset email" });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  const { email, token, newPassword } = req.body;
+
+  try {
+    const user = await User.findOne({ email, resetOtp: token });
+
+    if (!user || user.resetOtpExpiry < Date.now()) {
+      return res.status(400).json({ success: false, message: "Invalid or expired reset token" });
+    }
+
+    user.password = newPassword;
+    user.resetOtp = "";
+    user.resetOtpExpiry = 0;
+
+    await user.save();
+
+    res.status(200).json({ success: true, message: "Password reset successfully. You can now log in." });
+  } catch (err) {
+    console.error("Reset password error:", err);
+    const errors = handleErrors(err);
+    const message = errors.password || "Failed to reset password";
+    res.status(400).json({ success: false, message });
+  }
+};
+
 export {
   registerGet,
   loginGet,
@@ -274,4 +366,7 @@ export {
   logoutGet,
   sendVerifyOtp,
   verifyEmail,
+  changePassword,
+  forgotPassword,
+  resetPassword,
 };
