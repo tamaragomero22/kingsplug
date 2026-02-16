@@ -134,7 +134,7 @@ const loginPost = async (req, res) => {
     // }
     console.log("Logging in. Setting cookie with options:", cookieOptions);
     res.cookie("jwt", token, cookieOptions);
-    res.status(200).json({ user: user._id });
+    res.status(200).json({ user: user._id, token });
   } catch (err) {
     const errors = handleErrors(err);
     res.status(400).json({ errors });
@@ -254,6 +254,7 @@ const verifyEmail = async (req, res) => {
     // Return user info so the frontend knows the user is authenticated
     return res.status(200).json({
       success: true,
+      token,
       user: {
         id: user._id,
         email: user.email,

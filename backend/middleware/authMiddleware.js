@@ -2,9 +2,14 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
 const requireAuth = (req, res, next) => {
-  const token = req.cookies.jwt;
-  console.log("requireAuth middleware. Cookies:", req.cookies);
-  console.log("requireAuth middleware. JWT Token present:", !!token);
+  let token = req.cookies.jwt;
+
+  // If no cookie, check Authorization header (for mobile/API clients)
+  if (!token && req.headers.authorization && req.headers.authorization.startsWith("Bearer ")) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+
+  console.log("requireAuth middleware. Token found:", !!token);
 
   // Check if JSON web token exists & is verified
   if (token) {
