@@ -10,6 +10,7 @@ import About from "./About.jsx";
 import ScrollToTop from "./ScrollToTop.jsx";
 import ChangePassword from "./ChangePassword.jsx";
 import ResetPassword from "./ResetPassword.jsx";
+import Terms from "./Terms.jsx";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/kyc" element={<KYC />} />
         <Route path="/about" element={<About />} />
+        <Route path="/terms" element={<Terms />} />
         <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
