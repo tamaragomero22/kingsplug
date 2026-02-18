@@ -3,7 +3,7 @@ import { HashLink } from "react-router-hash-link";
 import { useState } from "react";
 import "./Nav.css";
 import homeIcon from "./assets/home.svg";
-import logo from "./assets/kingsplug.jpg";
+import logo from "./assets/Kingsplug.png";
 
 export const Nav = ({
   userEmail,
