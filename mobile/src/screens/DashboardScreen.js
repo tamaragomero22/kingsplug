@@ -10,6 +10,9 @@ const DashboardScreen = ({ navigation }) => {
     const { logout } = useAuth();
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [btcPrice, setBtcPrice] = useState(null);
+    const [btcPriceLoading, setBtcPriceLoading] = useState(true);
+    const [btcPriceError, setBtcPriceError] = useState(false);
 
     const fetchDashboardData = async () => {
         try {
@@ -36,6 +39,31 @@ const DashboardScreen = ({ navigation }) => {
 
     useEffect(() => {
         fetchDashboardData();
+    }, []);
+
+    const fetchBtcPrice = async () => {
+        setBtcPriceLoading(true);
+        setBtcPriceError(false);
+        try {
+            const res = await fetch(
+                'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd,ngn'
+            );
+            if (!res.ok) throw new Error('CoinGecko API error');
+            const data = await res.json();
+            const usdToNgn = data.bitcoin.ngn / data.bitcoin.usd;
+            setBtcPrice(Math.round(usdToNgn));
+        } catch (err) {
+            console.error('BTC price fetch error:', err);
+            setBtcPriceError(true);
+        } finally {
+            setBtcPriceLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchBtcPrice();
+        const interval = setInterval(fetchBtcPrice, 60000); // refresh every 60s
+        return () => clearInterval(interval);
     }, []);
 
     const handleLogout = () => {
@@ -73,7 +101,13 @@ const DashboardScreen = ({ navigation }) => {
                 <View style={styles.ratesGrid}>
                     <View style={styles.rateCard}>
                         <Text style={styles.rateLabel}>BTC Rate</Text>
-                        <Text style={styles.rateValue}>₦1,460</Text>
+                        <Text style={styles.rateValue}>
+                            {btcPriceLoading
+                                ? 'Loading...'
+                                : btcPriceError
+                                    ? 'Error'
+                                    : `\u20A6${btcPrice.toLocaleString('en-NG')}`}
+                        </Text>
                     </View>
                     <View style={styles.rateCard}>
                         <Text style={styles.rateLabel}>USDT Rate</Text>

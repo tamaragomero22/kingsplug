@@ -1,5 +1,5 @@
 .send-container {
-  max-width: 400px;
+  max-width: 440px;
   margin: 3rem auto;
   padding: 2rem;
   background-color: #f9fafc;
@@ -9,93 +9,137 @@
   text-align: center;
 }
 
-.send-btn,
-.bank-btn {
+
+/* ─── Payout account section ─── */
+.payout-section {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  animation: slideDown 0.2s ease;
+}
+
+.payout-section-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #888;
+  margin: 0 0 0.25rem;
+}
+
+/* Saved account card (selectable) */
+.payout-account-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem 1.1rem;
+  border: 1.5px solid #e1e2e4;
+  border-radius: 0.875rem;
+  background: #f9fafc;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.payout-account-card:hover {
+  border-color: #9580ff;
+  background: #f3f0ff;
+}
+
+.payout-account-card.selected {
+  border-color: #9580ff;
+  background: linear-gradient(135deg, #f3f0ff 0%, #fff0fa 100%);
+}
+
+.payout-account-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.payout-bank-icon {
+  font-size: 1.5rem;
+}
+
+.payout-account-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.payout-account-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.payout-account-sub {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* Add new payout account button */
+.add-payout-btn {
+  background: none;
+  border: 1.5px dashed #c8c5e0;
+  border-radius: 0.875rem;
+  padding: 0.85rem 1rem;
+  width: 100%;
+  color: #9580ff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.add-payout-btn:hover {
+  background: #f3f0ff;
+  border-color: #9580ff;
+}
+
+.add-payout-btn--primary {
+  border-style: solid;
+  background: linear-gradient(90deg, #80ffea22, #9580ff22);
+}
+
+/* ─── Buttons ─── */
+.send-btn {
   width: 100%;
   padding: 1rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
-  color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: 50px;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  letter-spacing: 0.3px;
+  background: linear-gradient(90deg, #ff79c6, #9580ff, #80ffea);
+  color: #fff;
+  margin-bottom: 0;
 }
 
-.bank-btn {
-  background: linear-gradient(90deg, #80ffea, #9580ff);
-  margin-bottom: 1.5rem;
-  color: #0c131f;
-}
-
-.send-btn {
-  background: linear-gradient(90deg, #ff79c6, #9580ff);
-}
-
-.send-btn:hover,
-.bank-btn:hover {
+.send-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(149, 128, 255, 0.3);
+  box-shadow: 0 8px 24px rgba(149, 128, 255, 0.35);
 }
 
-.send-btn:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-.error-message {
-  color: #ff5555;
+/* ─── Currency dropdown panel ─── */
+.currency-dropdown {
   margin-top: 1rem;
-  font-size: 0.9rem;
-}
-
-.copy-btn {
-  width: 100%;
-  padding: 0.8rem;
-  background: #eee;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-
-.copy-btn:hover {
-  background: #ddd;
-}
-
-.address-box {
-  margin-top: 2rem;
-  padding: 1.5rem;
   background: #fff;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  animation: fadeIn 0.5s ease-in-out;
+  border: 1px solid #e1e2e4;
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem 1.5rem;
+  text-align: left;
+  animation: slideDown 0.25s ease;
 }
 
-.btc-address {
-  font-family: monospace;
-  font-size: 1rem;
-  word-break: break-all;
-  background: #f1f1f1;
-  padding: 0.8rem;
-  border-radius: 4px;
-  margin-bottom: 1rem;
-  color: #333;
-}
-
-.qr-wrapper {
-  margin-top: 1.5rem;
-  display: flex;
-  justify-content: center;
-}
-
-@keyframes fadeIn {
+@keyframes slideDown {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(-10px);
   }
 
   to {
@@ -104,26 +148,277 @@
   }
 }
 
-/* Mobile Responsive */
+.dropdown-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #888;
+  margin-bottom: 0.85rem;
+}
+
+.currency-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.currency-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.9rem 1.1rem;
+  border: 1.5px solid #e1e2e4;
+  border-radius: 0.75rem;
+  background: #f9fafc;
+  cursor: pointer;
+  font-size: 0.97rem;
+  font-weight: 500;
+  color: #1a1a2e;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  text-align: left;
+}
+
+.currency-option:hover {
+  border-color: #9580ff;
+  background: #f3f0ff;
+}
+
+.currency-option.selected {
+  border-color: #9580ff;
+  background: linear-gradient(135deg, #f3f0ff 0%, #fff0fa 100%);
+}
+
+.currency-symbol {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #9580ff;
+  min-width: 24px;
+}
+
+.currency-label {
+  flex: 1;
+}
+
+.currency-check {
+  color: #9580ff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-left: auto;
+}
+
+
+
+.proceed-btn {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(90deg, #9580ff, #ff79c6);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-top: 0.4rem;
+}
+
+.proceed-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(149, 128, 255, 0.35);
+}
+
+.proceed-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ─── Error & Success ─── */
+.error-message {
+  color: #ff5555;
+  font-size: 0.88rem;
+  margin: 0;
+}
+
+.success-box {
+  margin-top: 1.1rem;
+  background: #f0fff4;
+  border: 1px solid #b2f5c8;
+  border-radius: 0.875rem;
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  animation: slideDown 0.25s ease;
+}
+
+.success-icon {
+  font-size: 1.75rem;
+}
+
+.success-text {
+  color: #1a5c33;
+  font-size: 0.93rem;
+  text-align: center;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ─── Confirmation Agreement ─── */
+.agreement-section {
+  margin-top: 1.25rem;
+  background: #fff;
+  border: 1px solid #e1e2e4;
+  border-radius: 0.875rem;
+  padding: 1.25rem 1.5rem 1.5rem;
+  text-align: left;
+  animation: slideDown 0.25s ease;
+}
+
+.agreement-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 0.6rem;
+}
+
+.agreement-desc {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.55;
+  margin: 0 0 1.1rem;
+}
+
+.agreement-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: #1a1a2e;
+  line-height: 1.5;
+  cursor: pointer;
+  margin-bottom: 0.75rem;
+}
+
+.agreement-checkbox input[type="checkbox"] {
+  margin-top: 4px;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  accent-color: #9580ff;
+  cursor: pointer;
+}
+
+.agreement-warning {
+  font-size: 0.85rem;
+  color: #c0392b;
+  background: #fff5f5;
+  border: 1px solid #fdd;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  line-height: 1.5;
+  margin: 0.25rem 0 1rem;
+}
+
+/* ─── Wallet Address Card ─── */
+.wallet-address-section {
+  margin-top: 1.25rem;
+  animation: slideDown 0.25s ease;
+}
+
+.wallet-address-card {
+  background: linear-gradient(135deg, #1a1a2e 0%, #2d1b69 100%);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.wallet-address-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 0 0.75rem;
+  font-weight: 700;
+}
+
+.wallet-address-value {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.85rem;
+  color: #80ffea;
+  word-break: break-all;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.75rem 1rem;
+  border-radius: 0.625rem;
+  border: 1px solid rgba(128, 255, 234, 0.2);
+  margin: 0 0 1rem;
+  line-height: 1.6;
+}
+
+.wallet-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.wallet-copy-btn,
+.wallet-new-btn {
+  flex: 1;
+  padding: 0.7rem 0.5rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.wallet-copy-btn {
+  background: #80ffea;
+  color: #1a1a2e;
+}
+
+.wallet-new-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.wallet-copy-btn:hover,
+.wallet-new-btn:hover {
+  transform: translateY(-1px);
+}
+
+.wallet-new-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.wallet-info-text {
+  font-size: 0.82rem;
+  color: #888;
+  text-align: center;
+  margin: 0.9rem 0 0;
+  line-height: 1.5;
+}
+
+/* ─── Mobile Responsive ─── */
 @media (max-width: 768px) {
   .send-container {
-    max-width: 90%;
+    max-width: 92%;
     padding: 1.5rem;
     margin: 2rem auto;
   }
 
-  .btc-address {
-    font-size: 0.85rem;
-    padding: 0.6rem;
+  .currency-dropdown {
+    padding: 1rem 1.1rem 1.25rem;
   }
 
-  .address-box {
-    padding: 1rem;
-  }
-
-  .qr-wrapper canvas {
-    max-width: 100%;
-    height: auto !important;
-    width: auto !important;
+  .wallet-actions {
+    flex-direction: column;
   }
 }

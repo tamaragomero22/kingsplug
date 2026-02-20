@@ -17,6 +17,9 @@ const Dashboard = () => {
   const [firstName, setFirstName] = useState("");
   const [isKycComplete, setIsKycComplete] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [btcPrice, setBtcPrice] = useState(null);
+  const [btcPriceLoading, setBtcPriceLoading] = useState(true);
+  const [btcPriceError, setBtcPriceError] = useState(false);
 
   const fetchDashboardData = async () => {
     try {
@@ -57,8 +60,32 @@ const Dashboard = () => {
       // Only fetch immediately if we didn't get user data from the navigation state.
       fetchDashboardData();
     }
-    // The interval for fetching price data is no longer needed.
   }, [location.state]);
+
+  const fetchBtcPrice = async () => {
+    setBtcPriceLoading(true);
+    setBtcPriceError(false);
+    try {
+      const res = await fetch(
+        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd,ngn"
+      );
+      if (!res.ok) throw new Error("CoinGecko API error");
+      const data = await res.json();
+      const usdToNgn = data.bitcoin.ngn / data.bitcoin.usd;
+      setBtcPrice(Math.round(usdToNgn));
+    } catch (err) {
+      console.error("BTC price fetch error:", err);
+      setBtcPriceError(true);
+    } finally {
+      setBtcPriceLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchBtcPrice();
+    const interval = setInterval(fetchBtcPrice, 60000); // refresh every 60s
+    return () => clearInterval(interval);
+  }, []);
 
   // Effect for fade-up animation
   useEffect(() => {
@@ -115,7 +142,13 @@ const Dashboard = () => {
         <div className="dashboard-content">
           <div className="feature-card fade-up">
             <h3>BTC Rate:</h3>
-            <p>&#8358;1,460</p>
+            <p>
+              {btcPriceLoading
+                ? "Loading..."
+                : btcPriceError
+                  ? "Error"
+                  : `\u20A6${btcPrice.toLocaleString("en-NG")}`}
+            </p>
           </div>
 
           <div className="feature-card fade-up">

@@ -83,6 +83,14 @@ const userSchema = new mongoose.Schema(
         message: (props) => `${props.value} is not a valid 11-digit BVN!`,
       },
     },
+    btcAddress: {
+      type: String,
+      default: null,
+    },
+    btcAddressHistory: {
+      type: [String],
+      default: [],
+    },
     isKycVerified: {
       type: Boolean,
       default: false,
