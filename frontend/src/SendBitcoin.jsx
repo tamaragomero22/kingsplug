@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { QRCodeCanvas } from "qrcode.react";
 import axios from "axios";
 import "./SendBitcoin.css";
 import AddBankAccount from "./AddBankAccount";
@@ -258,6 +259,17 @@ export default function SendBitcoin() {
               <div className="wallet-address-card">
                 <p className="wallet-address-label">Your Bitcoin Wallet Address</p>
                 <p className="wallet-address-value">{walletAddress}</p>
+                <div className="qr-container">
+                  <QRCodeCanvas
+                    value={walletAddress}
+                    size={160}
+                    bgColor={"#ffffff"}
+                    fgColor={"#1a1a2e"}
+                    level={"H"}
+                    includeMargin={true}
+                    className="qr-code"
+                  />
+                </div>
                 <div className="wallet-actions">
                   <button onClick={handleCopy} className="wallet-copy-btn">
                     {copied ? "✓ Copied!" : "📋 Copy Address"}

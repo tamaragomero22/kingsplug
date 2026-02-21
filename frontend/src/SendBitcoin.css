@@ -359,6 +359,18 @@
   line-height: 1.6;
 }
 
+.qr-container {
+  background: white;
+  padding: 10px;
+  border-radius: 12px;
+  display: inline-block;
+  margin-bottom: 1.5rem;
+}
+
+.qr-code {
+  display: block;
+}
+
 .wallet-actions {
   display: flex;
   gap: 0.6rem;
