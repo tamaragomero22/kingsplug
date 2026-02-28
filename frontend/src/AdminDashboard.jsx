@@ -2,13 +2,25 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminDashboard.css';
 
+const API_URL = import.meta.env.VITE_API_BASE_URL ||
+    (window.location.hostname === 'kingsplug.com' || window.location.hostname === 'www.kingsplug.com'
+        ? 'https://api.kingsplug.com'
+        : 'http://localhost:4000');
+
 const AdminDashboard = () => {
     const navigate = useNavigate();
     const [activeMenu, setActiveMenu] = useState('Transactions');
 
-    const handleLogout = () => {
-        // Here we could also call the logout API to clear the cookie
-        navigate('/admin');
+    const handleLogout = async () => {
+        try {
+            await fetch(`${API_URL}/api/auth/logout`, {
+                method: 'GET',
+                credentials: 'include'
+            });
+            navigate('/admin');
+        } catch (error) {
+            console.error('Logout failed:', error);
+        }
     };
 
     const navItems = [
