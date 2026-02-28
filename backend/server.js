@@ -4,11 +4,12 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
-import { requireAuth } from "./middleware/authMiddleware.js";
+import { requireAuth, requireAdmin } from "./middleware/authMiddleware.js";
 import authRoutes from "./routes/authRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import bitcoinRoutes from "./routes/bitcoinRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -55,6 +56,7 @@ app.use("/api/dashboard", requireAuth, dashboardRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/user", requireAuth, userRoutes);
 app.use("/api/bitcoin", bitcoinRoutes);
+app.use("/api/admin", requireAuth, requireAdmin, adminRoutes);
 
 // Catch-all for undefined routes
 app.use((req, res) => {

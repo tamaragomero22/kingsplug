@@ -11,6 +11,10 @@ const transactionSchema = new mongoose.Schema(
       enum: ["pending", "confirmed"],
       default: "pending",
     },
+    isDisbursed: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
