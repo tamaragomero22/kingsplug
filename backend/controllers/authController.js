@@ -134,7 +134,7 @@ const loginPost = async (req, res) => {
     // }
     console.log("Logging in. Setting cookie with options:", cookieOptions);
     res.cookie("jwt", token, cookieOptions);
-    res.status(200).json({ user: user._id, token });
+    res.status(200).json({ user: user._id, isAdmin: user.isAdmin, token });
   } catch (err) {
     const errors = handleErrors(err);
     res.status(400).json({ errors });
@@ -261,6 +261,7 @@ const verifyEmail = async (req, res) => {
         firstName: user.firstName,
         lastName: user.lastName,
         isKycVerified: user.isKycVerified,
+        isAdmin: user.isAdmin,
       },
     });
   } catch (error) {

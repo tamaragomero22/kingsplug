@@ -1,6 +1,6 @@
 import { NavLink, Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./Nav.css";
 import homeIcon from "./assets/home.svg";
 import logo from "./assets/kingsplug.png";
@@ -13,8 +13,21 @@ export const Nav = ({
   hideSignUp = false,
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -59,7 +72,7 @@ export const Nav = ({
                 <li>
                   <NavLink to="/dashboard" onClick={closeMobileMenu}>Wallet</NavLink>
                 </li>
-                <li className="user-profile-dropdown">
+                <li className="user-profile-dropdown" ref={dropdownRef}>
                   <button onClick={toggleDropdown} className="dropdown-toggle">
                     Hi {firstName} <span className={`arrow ${isDropdownOpen ? 'up' : 'down'}`}></span>
                   </button>
