@@ -13,6 +13,7 @@ import ResetPassword from "./ResetPassword.jsx";
 import Terms from "./Terms.jsx";
 import AdminLogin from "./AdminLogin.jsx";
 import AdminDashboard from "./AdminDashboard.jsx";
+import TransactionHistory from "./TransactionHistory.jsx";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/terms" element={<Terms />} />
         <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/transactions" element={<TransactionHistory />} />
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
       </Routes>

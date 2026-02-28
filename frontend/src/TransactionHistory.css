@@ -1,0 +1,204 @@
+.transactions-page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 20px 80px;
+    min-height: calc(100vh - 160px);
+    /* rough calc considering Nav and Footer heights */
+}
+
+.transactions-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.transactions-header h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--text-color, #1a1a1a);
+    margin-bottom: 12px;
+}
+
+.transactions-header p {
+    color: var(--text-color, #6b7280);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.transactions-content-wrapper {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: 24px;
+    border: 1px solid #e5e7eb;
+}
+
+/* Empty / Loading States */
+.loading-state,
+.error-state {
+    text-align: center;
+    padding: 60px 20px;
+    font-size: 1.1rem;
+    color: #6b7280;
+}
+
+.error-state {
+    color: #ef4444;
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.empty-state svg {
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+
+.empty-state h3 {
+    font-size: 1.25rem;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    color: #6b7280;
+    max-width: 400px;
+}
+
+/* Table */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.user-transactions-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.user-transactions-table th {
+    padding: 16px;
+    border-bottom: 2px solid #e5e7eb;
+    color: #4b5563;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background-color: #f9fafb;
+}
+
+.user-transactions-table td {
+    padding: 16px;
+    border-bottom: 1px solid #f3f4f6;
+    color: #111827;
+    font-size: 0.95rem;
+    vertical-align: middle;
+}
+
+.user-transactions-table tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+/* Cell specific styling */
+.tx-date {
+    color: #6b7280 !important;
+    font-size: 0.9rem !important;
+}
+
+.tx-hash {
+    font-family: monospace;
+    color: #2563eb !important;
+    cursor: pointer;
+}
+
+.tx-amount {
+    font-weight: 600;
+    color: #059669 !important;
+}
+
+.tx-fiat {
+    color: #4b5563 !important;
+}
+
+.tx-status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.tx-status.pending {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.tx-status.confirmed {
+    background-color: #d1fae5;
+    color: #059669;
+}
+
+/* Dark mode overrides (if the app uses it) */
+@media (prefers-color-scheme: dark) {
+
+    /* This relies on your App having dark mode class, or generic prefers scheme */
+    body.dark-theme .transactions-content-wrapper {
+        background: #1f2937;
+        border-color: #374151;
+    }
+
+    body.dark-theme .transactions-header h2 {
+        color: #f9fafb;
+    }
+
+    body.dark-theme .transactions-header p {
+        color: #9ca3af;
+    }
+
+    body.dark-theme .user-transactions-table th {
+        background-color: #111827;
+        border-bottom-color: #374151;
+        color: #9ca3af;
+    }
+
+    body.dark-theme .user-transactions-table td {
+        border-bottom-color: #374151;
+        color: #e5e7eb;
+    }
+
+    body.dark-theme .user-transactions-table tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    body.dark-theme .empty-state h3,
+    body.dark-theme .tx-fiat {
+        color: #e5e7eb !important;
+    }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .transactions-page-container {
+        padding: 20px 10px;
+    }
+
+    .transactions-content-wrapper {
+        padding: 12px;
+    }
+
+    .user-transactions-table th,
+    .user-transactions-table td {
+        padding: 12px 10px;
+        font-size: 0.85rem;
+    }
+
+    .tx-hash {
+        font-size: 0.8rem;
+    }
+}

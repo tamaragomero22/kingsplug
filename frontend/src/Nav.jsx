@@ -79,6 +79,7 @@ export const Nav = ({
                   {isDropdownOpen && (
                     <div className="dropdown-menu">
                       <Link to="/change-password" onClick={closeMobileMenu}>Change Password</Link>
+                      <Link to="/transactions" onClick={closeMobileMenu}>Transaction History</Link>
                       <button onClick={() => { onLogout(); closeMobileMenu(); }} className="dropdown-item">
                         Logout
                       </button>

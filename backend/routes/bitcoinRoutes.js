@@ -142,4 +142,35 @@ router.post("/webhook", async (req, res) => {
   }
 });
 
+/**
+ * GET /api/bitcoin/transactions
+ * Fetch all transaction history for the authenticated user
+ */
+router.get("/transactions", requireAuth, async (req, res) => {
+  try {
+    const user = req.user;
+
+    // Collect all addresses associated with the user
+    const userAddresses = new Set();
+    if (user.btcAddress) userAddresses.add(user.btcAddress);
+    if (user.btcAddressHistory && user.btcAddressHistory.length > 0) {
+      user.btcAddressHistory.forEach(addr => userAddresses.add(addr));
+    }
+
+    if (userAddresses.size === 0) {
+      return res.json({ success: true, transactions: [] });
+    }
+
+    // Find all transactions matching the user's addresses
+    const transactions = await Transaction.find({
+      toAddress: { $in: Array.from(userAddresses) }
+    }).sort({ createdAt: -1 }); // Newest first
+
+    res.json({ success: true, transactions });
+  } catch (error) {
+    console.error("Fetch transactions error:", error);
+    res.status(500).json({ success: false, message: "Server error fetching transactions" });
+  }
+});
+
 export default router;
