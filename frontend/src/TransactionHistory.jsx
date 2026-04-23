@@ -139,9 +139,9 @@ const TransactionHistory = () => {
                                     <tr>
                                         <th>Date</th>
                                         <th>Transaction Hash</th>
-                                        <th>Amount (BTC)</th>
+                                        <th>BTC</th>
                                         <th>Dollar Value</th>
-                                        <th>Est. Naira Value</th>
+                                        <th>Naira Value</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -155,7 +155,7 @@ const TransactionHistory = () => {
                                         // Simple estimate using current live rate, or a hardcoded rate if live fails
                                         const rateToUse = btcRate > 0 ? btcRate : 140000000; // rough fallback
                                         const estNaira = (tx.amountBTC * rateToUse).toLocaleString('en-NG', { maximumFractionDigits: 2 });
-                                        
+
                                         const usdRateToUse = btcUsdRate > 0 ? btcUsdRate : 100000; // rough fallback USD
                                         const estDollar = (tx.amountBTC * usdRateToUse).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
@@ -166,8 +166,8 @@ const TransactionHistory = () => {
                                                     {tx.txHash.substring(0, 10)}...{tx.txHash.substring(tx.txHash.length - 8)}
                                                 </td>
                                                 <td className="tx-amount">{tx.amountBTC.toFixed(8)} BTC</td>
-                                                <td className="tx-fiat">~{estDollar}</td>
-                                                <td className="tx-fiat">~&#8358;{estNaira}</td>
+                                                <td className="tx-fiat">{estDollar}</td>
+                                                <td className="tx-fiat">&#8358;{estNaira}</td>
                                                 <td>
                                                     <span className={`tx-status ${tx.status}`}>
                                                         {tx.status.charAt(0).toUpperCase() + tx.status.slice(1)}
