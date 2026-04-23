@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
 import User from './models/User.js';
 import Transaction from './models/Transaction.js';
-
-mongoose.connect('mongodb://localhost:27017/nysonDatabase');
+mongoose.connect('mongodb+srv://kingspluguser:SecurePass123@cluster0.gxnvhod.mongodb.net/nysonDatabase?retryWrites=true&w=majority');
 
 async function run() {
     const users = await User.find({ btcAddressHistory: { $exists: true, $not: {$size: 0} } });
