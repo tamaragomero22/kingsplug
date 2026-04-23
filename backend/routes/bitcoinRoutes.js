@@ -126,6 +126,21 @@ router.all("/webhook", async (req, res) => {
 
     const amountBTC = receivedSatoshis / 100000000;
 
+    // Blockonomics status: 0 (Unconfirmed), 1 (Partially Confirmed), 2 (Confirmed)
+    let txStatus = "pending";
+    let confirms = tx.confirmations || 0;
+    
+    if (tx.status !== undefined) {
+      confirms = Number(tx.status); // Maps to progress
+      if (confirms >= 2) {
+        txStatus = "confirmed";
+      }
+    } else if (tx.confirmations !== undefined) {
+      if (confirms >= 3) {
+        txStatus = "confirmed";
+      }
+    }
+
     // Upsert the transaction so we have a record regardless of prior state
     await Transaction.findOneAndUpdate(
       { txHash },
@@ -133,8 +148,8 @@ router.all("/webhook", async (req, res) => {
         txHash,
         toAddress: toAddress || "unknown",
         amountBTC,
-        confirmations: tx.confirmations || 0,
-        status: (tx.confirmations || 0) >= 3 ? "confirmed" : "pending",
+        confirmations: confirms,
+        status: txStatus,
       },
       { upsert: true }
     );
