@@ -71,8 +71,7 @@ const Dashboard = () => {
       );
       if (!res.ok) throw new Error("CoinGecko API error");
       const data = await res.json();
-      const usdToNgn = data.bitcoin.ngn / data.bitcoin.usd;
-      setBtcPrice(Math.round(usdToNgn));
+      setBtcPrice(Math.round(data.bitcoin.ngn));
     } catch (err) {
       console.error("BTC price fetch error:", err);
       setBtcPriceError(true);

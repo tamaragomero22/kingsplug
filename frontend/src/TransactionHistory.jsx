@@ -82,8 +82,7 @@ const TransactionHistory = () => {
             );
             if (res.ok) {
                 const data = await res.json();
-                const usdToNgn = data.bitcoin.ngn / data.bitcoin.usd;
-                setBtcRate(usdToNgn);
+                setBtcRate(data.bitcoin.ngn);
             }
         } catch (err) {
             console.error("BTC price fetch error:", err);
@@ -151,7 +150,7 @@ const TransactionHistory = () => {
                                         });
 
                                         // Simple estimate using current live rate, or a hardcoded rate if live fails
-                                        const rateToUse = btcRate > 0 ? btcRate : 1400; // rough fallback fallback
+                                        const rateToUse = btcRate > 0 ? btcRate : 140000000; // rough fallback
                                         const estNaira = (tx.amountBTC * rateToUse).toLocaleString('en-NG', { maximumFractionDigits: 2 });
 
                                         return (
