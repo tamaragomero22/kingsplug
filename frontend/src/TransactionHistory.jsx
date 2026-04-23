@@ -17,6 +17,7 @@ const TransactionHistory = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
     const [btcRate, setBtcRate] = useState(0);
+    const [btcUsdRate, setBtcUsdRate] = useState(0);
 
     useEffect(() => {
         fetchDashboardData();
@@ -83,6 +84,7 @@ const TransactionHistory = () => {
             if (res.ok) {
                 const data = await res.json();
                 setBtcRate(data.bitcoin.ngn);
+                setBtcUsdRate(data.bitcoin.usd);
             }
         } catch (err) {
             console.error("BTC price fetch error:", err);
@@ -138,6 +140,7 @@ const TransactionHistory = () => {
                                         <th>Date</th>
                                         <th>Transaction Hash</th>
                                         <th>Amount (BTC)</th>
+                                        <th>Dollar Value</th>
                                         <th>Est. Naira Value</th>
                                         <th>Status</th>
                                     </tr>
@@ -152,6 +155,9 @@ const TransactionHistory = () => {
                                         // Simple estimate using current live rate, or a hardcoded rate if live fails
                                         const rateToUse = btcRate > 0 ? btcRate : 140000000; // rough fallback
                                         const estNaira = (tx.amountBTC * rateToUse).toLocaleString('en-NG', { maximumFractionDigits: 2 });
+                                        
+                                        const usdRateToUse = btcUsdRate > 0 ? btcUsdRate : 100000; // rough fallback USD
+                                        const estDollar = (tx.amountBTC * usdRateToUse).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
                                         return (
                                             <tr key={tx._id}>
@@ -160,6 +166,7 @@ const TransactionHistory = () => {
                                                     {tx.txHash.substring(0, 10)}...{tx.txHash.substring(tx.txHash.length - 8)}
                                                 </td>
                                                 <td className="tx-amount">{tx.amountBTC.toFixed(8)} BTC</td>
+                                                <td className="tx-fiat">~{estDollar}</td>
                                                 <td className="tx-fiat">~&#8358;{estNaira}</td>
                                                 <td>
                                                     <span className={`tx-status ${tx.status}`}>
