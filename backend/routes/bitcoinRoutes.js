@@ -86,6 +86,9 @@ router.post("/webhook", async (req, res) => {
   try {
     const tx = req.body;
 
+    // Debug: surface incoming webhook payload for troubleshooting
+    console.log("Webhook payload received:", JSON.stringify(tx, null, 2));
+
     if (!tx.hash && !tx.txid) {
       return res.sendStatus(400);
     }
@@ -123,6 +126,7 @@ router.post("/webhook", async (req, res) => {
 
     const amountBTC = receivedSatoshis / 100000000;
 
+    // Upsert the transaction so we have a record regardless of prior state
     await Transaction.findOneAndUpdate(
       { txHash },
       {
@@ -134,6 +138,10 @@ router.post("/webhook", async (req, res) => {
       },
       { upsert: true }
     );
+
+    // Debug: fetch and log the stored/updated transaction for visibility
+    const stored = await Transaction.findOne({ txHash }).lean();
+    console.log("Stored/Updated Transaction:", stored);
 
     res.sendStatus(200);
   } catch (error) {

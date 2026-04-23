@@ -5,10 +5,9 @@ import { Nav } from "./Nav";
 import { Footer } from "./Footer";
 import "./ResetPassword.css";
 
-const API_URL = import.meta.env.VITE_API_BASE_URL ||
-    (window.location.hostname === 'kingsplug.com' || window.location.hostname === 'www.kingsplug.com'
-        ? 'https://api.kingsplug.com'
-        : 'http://localhost:4000');
+const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:4000'
+    : (import.meta.env.VITE_API_BASE_URL || 'https://api.kingsplug.com');
 
 const ResetPassword = () => {
     const [searchParams] = useSearchParams();
