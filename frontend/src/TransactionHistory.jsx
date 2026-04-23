@@ -13,6 +13,8 @@ const TransactionHistory = () => {
     const navigate = useNavigate();
     const [userEmail, setUserEmail] = useState("");
     const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [selectedTransaction, setSelectedTransaction] = useState(null);
     const [transactions, setTransactions] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
@@ -40,6 +42,7 @@ const TransactionHistory = () => {
             const data = await response.json();
             setUserEmail(data.user.email);
             setFirstName(data.user.firstName);
+            setLastName(data.user.lastName);
 
             // After confirming user auth, fetch transactions
             fetchTransactions();
@@ -160,7 +163,7 @@ const TransactionHistory = () => {
                                         const estDollar = (tx.amountBTC * usdRateToUse).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
                                         return (
-                                            <tr key={tx._id}>
+                                            <tr key={tx._id} className="clickable-row" onClick={() => setSelectedTransaction(tx)}>
                                                 <td className="tx-date">{txDate}</td>
                                                 <td className="tx-hash" title={tx.txHash}>
                                                     {tx.txHash.substring(0, 10)}...{tx.txHash.substring(tx.txHash.length - 8)}
@@ -182,6 +185,59 @@ const TransactionHistory = () => {
                     )}
                 </div>
             </div>
+
+            {selectedTransaction && (
+                <div className="transaction-modal-overlay" onClick={() => setSelectedTransaction(null)}>
+                    <div className="transaction-modal-content" onClick={(e) => e.stopPropagation()}>
+                        <div className="transaction-modal-header">
+                            <h3>Transaction Details</h3>
+                            <button className="close-modal-btn" onClick={() => setSelectedTransaction(null)}>&times;</button>
+                        </div>
+                        <div className="transaction-modal-body">
+                            <div className="detail-row">
+                                <span className="detail-label">Sender Name:</span>
+                                <span className="detail-value">{firstName} {lastName}</span>
+                            </div>
+                            <div className="detail-row">
+                                <span className="detail-label">Date:</span>
+                                <span className="detail-value">
+                                    {new Date(selectedTransaction.createdAt).toLocaleString(undefined, {
+                                        year: 'numeric', month: 'long', day: 'numeric',
+                                        hour: '2-digit', minute: '2-digit'
+                                    })}
+                                </span>
+                            </div>
+                            <div className="detail-row">
+                                <span className="detail-label">Transaction Hash:</span>
+                                <span className="detail-value tx-hash-full" style={{wordBreak: "break-all", fontSize: "0.9rem"}}>{selectedTransaction.txHash}</span>
+                            </div>
+                            <div className="detail-row">
+                                <span className="detail-label">Amount (BTC):</span>
+                                <span className="detail-value">{selectedTransaction.amountBTC.toFixed(8)} BTC</span>
+                            </div>
+                            <div className="detail-row">
+                                <span className="detail-label">Dollar Value:</span>
+                                <span className="detail-value">
+                                    {(selectedTransaction.amountBTC * (btcUsdRate > 0 ? btcUsdRate : 100000)).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
+                                </span>
+                            </div>
+                            <div className="detail-row">
+                                <span className="detail-label">Naira Value:</span>
+                                <span className="detail-value">
+                                    &#8358;{(selectedTransaction.amountBTC * (btcRate > 0 ? btcRate : 140000000)).toLocaleString('en-NG', { maximumFractionDigits: 2 })}
+                                </span>
+                            </div>
+                            <div className="detail-row">
+                                <span className="detail-label">Status:</span>
+                                <span className={`detail-value tx-status ${selectedTransaction.status}`}>
+                                    {selectedTransaction.status.charAt(0).toUpperCase() + selectedTransaction.status.slice(1)}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <Footer />
         </>
     );
