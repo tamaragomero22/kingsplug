@@ -82,9 +82,9 @@ router.post("/new-address", requireAuth, async (req, res) => {
  * POST /api/bitcoin/webhook
  * Receives blockchain transaction notifications (e.g. from BlockCypher or Blockonomics).
  */
-router.post("/webhook", async (req, res) => {
+router.all("/webhook", async (req, res) => {
   try {
-    const tx = req.body;
+    const tx = req.method === "GET" ? req.query : req.body;
 
     // Debug: surface incoming webhook payload for troubleshooting
     console.log("Webhook payload received:", JSON.stringify(tx, null, 2));
