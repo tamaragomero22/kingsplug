@@ -14,6 +14,8 @@ const TransactionHistory = () => {
     const [userEmail, setUserEmail] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+    const [bankName, setBankName] = useState("");
+    const [accountNumber, setAccountNumber] = useState("");
     const [selectedTransaction, setSelectedTransaction] = useState(null);
     const [transactions, setTransactions] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +26,27 @@ const TransactionHistory = () => {
     useEffect(() => {
         fetchDashboardData();
         fetchBtcPrice();
+        fetchBankAccount();
     }, []);
+
+    const fetchBankAccount = async () => {
+        try {
+            const res = await fetch(`${API_URL}/api/user/bank-account`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+            });
+            if (res.ok) {
+                const data = await res.json();
+                if (data.success && data.bankAccount) {
+                    setBankName(data.bankAccount.bankName);
+                    setAccountNumber(data.bankAccount.accountNumber);
+                }
+            }
+        } catch (err) {
+            console.error("Bank account fetch error:", err);
+        }
+    };
 
     const fetchDashboardData = async () => {
         try {
@@ -197,6 +219,14 @@ const TransactionHistory = () => {
                             <div className="detail-row">
                                 <span className="detail-label">Sender Name:</span>
                                 <span className="detail-value">{firstName} {lastName}</span>
+                            </div>
+                            <div className="detail-row">
+                                <span className="detail-label">Bank Name:</span>
+                                <span className="detail-value">{bankName || "N/A"}</span>
+                            </div>
+                            <div className="detail-row">
+                                <span className="detail-label">Account Number:</span>
+                                <span className="detail-value">{accountNumber || "N/A"}</span>
                             </div>
                             <div className="detail-row">
                                 <span className="detail-label">Date:</span>
