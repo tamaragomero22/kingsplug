@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ActivityIndicator, View, Text, StatusBar } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import { COLORS } from '../constants/theme';
+import SplashScreen from '../screens/SplashScreen';
 
 // Screens
 import LoginScreen from '../screens/LoginScreen';
@@ -72,6 +73,12 @@ const AppNavigator = () => (
 
 const RootNavigator = () => {
     const { userToken, isLoading } = useAuth();
+    const [showSplash, setShowSplash] = useState(true);
+
+    // Show splash on initial mount regardless of auth state
+    if (showSplash) {
+        return <SplashScreen onFinish={() => setShowSplash(false)} />;
+    }
 
     if (isLoading) {
         return (
